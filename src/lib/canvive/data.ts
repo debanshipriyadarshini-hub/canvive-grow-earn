@@ -1,4 +1,4 @@
-export type PlantId = "sunflower" | "rose" | "sakura" | "willow" | "lily" | "lotus";
+export type PlantId = "sunflower" | "rose" | "sakura" | "lavender" | "lily" | "lotus";
 
 export type PlantMeta = {
   id: PlantId;
@@ -14,56 +14,56 @@ export const PLANTS: PlantMeta[] = [
     id: "sunflower",
     name: "Sunflower",
     emoji: "🌻",
-    description: "Warm and cheerful. Turns towards every bit of light it can find.",
+    description: "A bright meadow bloom that turns toward every bit of light.",
     environment: "garden",
-    stages: ["Seed", "Sprout", "Stem", "Bud", "Full Sunflower"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
   {
     id: "rose",
     name: "Rose",
     emoji: "🌹",
-    description: "Soft petals, patient growth. A classic for a steady recycler.",
+    description: "A patient garden rose with rich foliage and coral blooms.",
     environment: "garden",
-    stages: ["Seed", "Sprout", "Stem", "Rose Bud", "Blooming Rose"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
   {
     id: "sakura",
     name: "Sakura",
     emoji: "🌸",
-    description: "A cherry blossom tree with delicate pastel-pink flowers.",
+    description: "A cherry blossom grove that gathers delicate pink petals over time.",
     environment: "garden",
-    stages: ["Seed", "Small Tree", "Branches", "Blossom Buds", "Full Sakura Tree"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
   {
-    id: "willow",
-    name: "Willow",
-    emoji: "🌳",
-    description: "Long hanging branches beside a quiet stream.",
+    id: "lavender",
+    name: "Lavender Land",
+    emoji: "🪻",
+    description: "Grow a peaceful field of fragrant lavender.",
     environment: "garden",
-    stages: ["Seed", "Sapling", "Small Tree", "Hanging Branches", "Full Willow"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
   {
     id: "lily",
     name: "Lily",
     emoji: "🪻",
-    description: "An elegant flower resting on calm pastel water.",
+    description: "An elegant pond flower surrounded by pads and gentle ripples.",
     environment: "water",
-    stages: ["Seed", "Water Sprout", "Lily Pad", "Bud", "Blooming Lily"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
   {
     id: "lotus",
     name: "Lotus",
     emoji: "🪷",
-    description: "A peaceful pond bloom. The calmest corner of your garden.",
+    description: "A serene water garden with broad leaves and a rewarding bloom.",
     environment: "water",
-    stages: ["Seed", "Water Sprout", "Lily Pad", "Lotus Bud", "Full Blooming Lotus"],
+    stages: ["Seed", "Sprout", "Young Plant", "Growing Plant", "Full Bloom"],
   },
 ];
 
 export const plantMeta = (id: PlantId) => PLANTS.find((p) => p.id === id)!;
 
-export const GROWTH_GOAL = 50;
-export const STAGE_THRESHOLDS = [0, 5, 15, 30, 50];
+export const GROWTH_GOAL = 25;
+export const STAGE_THRESHOLDS = [0, 5, 10, 15, 25];
 
 export function stageIndex(growth: number) {
   let i = 0;

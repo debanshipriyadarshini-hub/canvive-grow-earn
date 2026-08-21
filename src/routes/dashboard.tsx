@@ -25,7 +25,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function Dashboard() {
-  const { state, recycleCan, rank, level, claimChallenge } = useCanVive();
+  const { state, recycleCan, rank, level, claimChallenge, challengeProgress } = useCanVive();
   const [pulse, setPulse] = useState(0);
 
   const active = state.garden.find((p) => p.id === state.activePlant);
@@ -171,7 +171,7 @@ function Dashboard() {
             </li>
           </ul>
           <p className="mt-4 text-xs text-muted-foreground">Community figures are prototype/demo statistics.</p>
-          {state.cansThisWeek >= 10 && !state.claimedChallenges.includes("collector") && (
+          {challengeProgress("weekCans") >= 10 && !state.claimedChallenges.includes("collector") && (
             <Button variant="accent" className="mt-5 w-full" onClick={() => claimChallenge("collector")}>
               Claim weekly challenge +100
             </Button>

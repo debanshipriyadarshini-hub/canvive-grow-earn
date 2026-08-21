@@ -115,13 +115,13 @@ function Stations() {
           </dl>
           <Button
             variant="accent"
-            disabled={station?.status === "Unavailable"}
+            disabled={station?.status !== "Active"}
             onClick={() => {
-              if (station) recycleCan(station.name);
+              if (station?.status === "Active") recycleCan(station.name);
               setOpenId(null);
             }}
           >
-            Demo: Recycle a Can here
+            {station?.status === "Active" ? "Demo: Recycle a Can here" : "Station unavailable"}
           </Button>
         </DialogContent>
       </Dialog>

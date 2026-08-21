@@ -4,6 +4,7 @@ import {
   CHALLENGES,
   GROWTH_GOAL,
   LEADERBOARD_OTHERS,
+  PLANTS,
   REWARDS,
   levelFor,
   plantMeta,
@@ -72,8 +73,8 @@ const initialState: State = {
   },
   cans: 42,
   points: 420,
-  cansThisWeek: 7,
-  cansThisMonth: 18,
+  cansThisWeek: 12,
+  cansThisMonth: 22,
   contributions: [
     { id: "c1", date: daysAgo(1), location: "College Campus", cans: 5, points: 50 },
     { id: "c2", date: daysAgo(3), location: "Café Station", cans: 3, points: 30 },
@@ -120,6 +121,45 @@ const StoreContext = createContext<Ctx | null>(null);
 
 const uid = () => Math.random().toString(36).slice(2, 9);
 
+function normalizePlantId(value: unknown): PlantId | null {
+  const id = value === "willow" ? "lavender" : value;
+  return PLANTS.some((plant) => plant.id === id) ? (id as PlantId) : null;
+}
+
+function normalizeState(saved: Partial<State>): State {
+  const garden = Array.isArray(saved.garden)
+    ? saved.garden.flatMap((plant) => {
+        const id = normalizePlantId(plant?.id);
+        if (!id) return [];
+        const growth = typeof plant.growth === "number" && Number.isFinite(plant.growth) ? plant.growth : 0;
+        return [{ ...plant, id, growth: Math.max(0, Math.min(GROWTH_GOAL, growth)) }];
+      })
+    : initialState.garden;
+  const activePlant = normalizePlantId(saved.activePlant);
+  const completedPlants = Array.isArray(saved.completedPlants)
+    ? saved.completedPlants.flatMap((id) => {
+        const normalized = normalizePlantId(id);
+        return normalized ? [normalized] : [];
+      })
+    : initialState.completedPlants;
+
+  return {
+    ...initialState,
+    ...saved,
+    garden,
+    activePlant: activePlant && garden.some((plant) => plant.id === activePlant) ? activePlant : garden[0]?.id ?? null,
+    completedPlants,
+  };
+}
+
+function cansInPeriod(contributions: Contribution[], days: number) {
+  const cutoff = Date.now() - days * 86400000;
+  return contributions.reduce((total, contribution) => {
+    const timestamp = new Date(contribution.date).getTime();
+    return timestamp >= cutoff && timestamp <= Date.now() ? total + contribution.cans : total;
+  }, 0);
+}
+
 export function CanViveProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<State>(initialState);
   const [ready, setReady] = useState(false);
@@ -127,7 +167,7 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) setState({ ...initialState, ...JSON.parse(raw) });
+      if (raw) setState(normalizeState(JSON.parse(raw) as Partial<State>));
     } catch {
       /* ignore */
     }
@@ -150,7 +190,7 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
 
   const challengeProgress = useCallback(
     (metric: string) => {
-      if (metric === "weekCans") return state.cansThisWeek;
+      if (metric === "weekCans") return cansInPeriod(state.contributions, 7);
       if (metric === "cans") return state.cans;
       return state.completedPlants.length;
     },
@@ -173,56 +213,52 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
 
   const recycleCan = useCallback(
     (location = "College Campus") => {
+      const before = state.garden.find((p) => p.id === state.activePlant);
+      const nextGrowth = before ? Math.min(GROWTH_GOAL, before.growth + 1) : null;
+      const points = state.points + 10;
+      const previousRank = LEADERBOARD_OTHERS.filter((p) => p.cans > state.cans).length + 1;
+      const nextRank = LEADERBOARD_OTHERS.filter((p) => p.cans > state.cans + 1).length + 1;
+
       setState((s) => {
-        const prevRank = LEADERBOARD_OTHERS.filter((p) => p.cans > s.cans).length + 1;
         const now = new Date();
         const garden = s.garden.map((p) =>
-          p.id === s.activePlant && p.growth < GROWTH_GOAL ? { ...p, growth: p.growth + 1 } : p,
+          p.id === s.activePlant && p.growth < GROWTH_GOAL ? { ...p, growth: Math.min(GROWTH_GOAL, p.growth + 1) } : p,
         );
         const active = garden.find((p) => p.id === s.activePlant);
-        const before = s.garden.find((p) => p.id === s.activePlant);
         const cans = s.cans + 1;
-        const points = s.points + 10;
 
         const completedPlants =
           active && active.growth >= GROWTH_GOAL && !s.completedPlants.includes(active.id)
             ? [...s.completedPlants, active.id]
             : s.completedPlants;
 
-        setTimeout(() => {
-          toast.success("Can recycled successfully! +10 points ⭐");
-          if (active && before && stageIndex(active.growth) > stageIndex(before.growth)) {
-            toast(`Your garden grew! 🌱 ${plantMeta(active.id).name} is now a ${plantMeta(active.id).stages[stageIndex(active.growth)]}.`);
-          }
-          const unlocked = REWARDS.find((r) => r.cost > s.points && r.cost <= points);
-          if (unlocked) toast(`You unlocked a new reward! 🎁 ${unlocked.name}`);
-          const newRank = LEADERBOARD_OTHERS.filter((p) => p.cans > cans).length + 1;
-          if (newRank < prevRank) toast(`You moved up to #${newRank} on the leaderboard!`);
-        }, 0);
-
-        const sameDay = s.contributions.find(
-          (c) => new Date(c.date).toDateString() === now.toDateString() && c.location === location,
-        );
-        const contributions = sameDay
-          ? s.contributions.map((c) =>
-              c.id === sameDay.id ? { ...c, cans: c.cans + 1, points: c.points + 10 } : c,
-            )
-          : [{ id: uid(), date: iso(now), location, cans: 1, points: 10 }, ...s.contributions];
+        const contributions = [{ id: uid(), date: iso(now), location, cans: 1, points: 10 }, ...s.contributions];
 
         return {
           ...s,
           cans,
           points,
-          cansThisWeek: s.cansThisWeek + 1,
-          cansThisMonth: s.cansThisMonth + 1,
+          cansThisWeek: cansInPeriod(contributions, 7),
+          cansThisMonth: cansInPeriod(contributions, 30),
           contributions,
           garden,
           completedPlants,
           activity: [{ id: uid(), label: "Can recycled", points: 10, date: iso(now) }, ...s.activity].slice(0, 12),
         };
       });
+
+      toast.success("Can recycled successfully! +10 points ⭐");
+      if (nextGrowth !== null && nextGrowth > (before?.growth ?? 0) && before) {
+        toast.success(`Can recycled! 🌱 Your ${plantMeta(before.id).name} is growing.`);
+        if (stageIndex(nextGrowth) > stageIndex(before.growth)) {
+          toast(`Your garden grew! 🌱 ${plantMeta(before.id).name} is now ${plantMeta(before.id).stages[stageIndex(nextGrowth)]}.`);
+        }
+      }
+      const unlocked = REWARDS.find((r) => r.cost > state.points && r.cost <= points);
+      if (unlocked) toast(`You unlocked a new reward! 🎁 ${unlocked.name}`);
+      if (nextRank < previousRank) toast(`You moved up to #${nextRank} on the leaderboard!`);
     },
-    [],
+    [state],
   );
 
   const choosePlant = useCallback((id: PlantId) => {
