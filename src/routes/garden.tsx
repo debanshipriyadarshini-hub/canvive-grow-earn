@@ -103,10 +103,10 @@ function Garden() {
       <header className="garden-header-stack">
         <p className="garden-kicker"><Sprout className="h-4 w-4" /> Your living collection</p>
         <h1>My CanVive Garden</h1>
+        <p className="garden-header-stat"><Recycle className="h-5 w-5" aria-hidden /> <strong>{state.cans}</strong> cans recycled</p>
         <p className="garden-header-copy">Switch between your garden views and watch your recycled cans become part of your journey.</p>
+        <p className="garden-header-note">Recycle cans from Home to grow your plant 🌱</p>
       </header>
-
-      <p className="garden-header-note">Recycle cans from Home to grow your plant 🌱</p>
 
       <section className="garden-section garden-collection-section">
         <div className="garden-section-heading"><span className="garden-collection-count">{state.garden.length} / 6 planted</span></div>
