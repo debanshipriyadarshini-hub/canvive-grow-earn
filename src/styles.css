@@ -248,11 +248,15 @@
   --garden-pink: #ff9db5;
   --garden-water-deep: #2f855a;
 }
-.garden-page .garden-header-stack { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; margin-bottom: 2rem; }
-.garden-page .garden-header-stack h1 { margin: 0; font-size: clamp(2.25rem, 5vw, 4.2rem); line-height: .98; }
-.garden-page .garden-header-stat { margin: 0; color: var(--garden-ink); font-family: var(--font-display); font-size: clamp(1.35rem, 2vw, 2rem); font-weight: 700; }
-.garden-page .garden-header-copy { margin: 0; max-width: 38rem; color: var(--garden-muted); font-size: 1rem; line-height: 1.6; }
-.garden-page .garden-header-note { margin: 0 0 1.25rem; color: var(--garden-muted); font-size: .9rem; }
+.garden-page .garden-header-stack { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0; width: 100%; min-height: 0; margin: 0 0 2.5rem; padding: 0; }
+.garden-page .garden-header-stack > * { position: static; max-width: 100%; margin: 0; transform: none; }
+.garden-page .garden-header-stack > .garden-kicker { margin-bottom: .65rem; }
+.garden-page .garden-header-stack h1 { font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1rem; overflow-wrap: anywhere; }
+.garden-page .garden-header-stat { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 1rem; padding: .45rem .95rem; border: 1px solid var(--garden-green-soft); border-radius: 999px; background: #f2fff5; color: var(--garden-ink); font-size: 1rem; font-weight: 600; }
+.garden-page .garden-header-stat strong { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; line-height: 1; }
+.garden-page .garden-header-stat svg { color: var(--garden-green); }
+.garden-page .garden-header-copy { max-width: 42rem; color: var(--garden-muted); font-size: 1rem; line-height: 1.6; }
+.garden-page .garden-header-note { margin-top: .6rem; color: var(--garden-muted); font-size: .9rem; }
 .garden-page .garden-heading-picker { margin-bottom: 2rem; }
 .garden-page .garden-heading-picker h1 { max-width: 32rem; }
 .garden-page .garden-impact-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 1.4fr; gap: .75rem; margin-bottom: 1.5rem; padding: .9rem; border: 1px solid #a8e6b5; border-radius: 1.25rem; background: linear-gradient(100deg, #f2fff5, #fff5f2 70%, #fffdf5); }
@@ -302,3 +306,14 @@
 @keyframes lavender-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1.5deg); } }
 @media (max-width: 900px) { .garden-page .garden-hero-art { min-height: 24rem; }.garden-page .garden-scene-label { right: 1.5rem; } }
 @media (max-width: 640px) { .garden-page .garden-hero-art { min-height: 20rem; padding: .3rem .5rem 2rem; }.garden-page .garden-scene-label { right: 1rem; bottom: .7rem; font-size: .76rem; }.garden-page .garden-seed-art { height: 14rem; } }
+
+/* Garden hero/header flow safeguards: keep every block in normal document flow. */
+.garden-page .garden-collection-section { margin-top: 0; }
+.garden-page .garden-impact-strip { margin-top: 1.5rem; }
+.garden-page .garden-hero { margin-top: 1.5rem; height: auto; }
+@media (max-width: 640px) {
+  .garden-page .garden-header-stack { margin-bottom: 1.75rem; }
+  .garden-page .garden-header-stack h1 { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  .garden-page .garden-header-stat { font-size: .92rem; }
+  .garden-page .garden-header-stat strong { font-size: 1.15rem; }
+}
