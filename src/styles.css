@@ -317,3 +317,10 @@
   .garden-page .garden-header-stat { font-size: .92rem; }
   .garden-page .garden-header-stat strong { font-size: 1.15rem; }
 }
+
+/* Growth dashboard + contribution card sit side by side; never overlap the next section. */
+.garden-page .garden-progress-layout { align-items: stretch; }
+.garden-page .garden-progress-layout > * { min-width: 0; }
+.garden-page .garden-progress-panel { display: flex; height: 100%; }
+.garden-page .garden-progress-panel > .card-soft { width: 100%; height: auto; }
+.garden-page .garden-impact-panel { height: 100%; }
