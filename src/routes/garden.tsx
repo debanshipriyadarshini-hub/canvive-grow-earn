@@ -158,8 +158,9 @@ function Garden() {
               <span className="garden-scene-label">{active.id === "sunflower" ? "Your Meadow" : active.id === "rose" ? "Blooming Garden" : active.id === "sakura" ? "Cherry Blossom Grove" : active.id === "lavender" ? "Lavender Field" : active.id === "lily" ? "Pond Garden" : "Serene Water Garden"}</span>
             </div><div className="garden-hero-note"><Sun className="h-4 w-4" /> {activeStage === 4 ? "Your biome is thriving" : "Every can adds a little more life"}</div>
         </section>
-        <section className="garden-progress-layout"><div className="garden-progress-panel">
-          <div className="card-soft p-6 lg:col-span-2">
+        <section className="garden-progress-layout">
+          <div className="garden-progress-panel">
+            <div className="card-soft p-6">
             <div className="garden-panel-heading"><div><p className="garden-card-eyebrow">Growth dashboard</p><h2>
               {meta.emoji} {meta.name}
             </h2></div><span className="garden-percentage">{progress}%</span></div>
@@ -191,7 +192,10 @@ function Garden() {
             <Button variant="outline" className="mt-6 w-full" onClick={() => setPicking(true)}>
               Plant another seed
             </Button>
-          </div><div className="garden-impact-panel"><div className="garden-impact-icon"><Recycle /></div><p className="garden-card-eyebrow">Your contribution</p><h3>{state.cans} cans recycled</h3><p>That is <strong>{state.points} points</strong> moving through your CanVive journey.</p><div className="garden-impact-rule"><Droplets className="h-4 w-4" /> Recycling powers your next bloom</div></div></div></section>
+          </div>
+          </div>
+          <div className="garden-impact-panel"><div className="garden-impact-icon"><Recycle /></div><p className="garden-card-eyebrow">Your contribution</p><h3>{state.cans} cans recycled</h3><p>That is <strong>{state.points} points</strong> moving through your CanVive journey.</p><div className="garden-impact-rule"><Droplets className="h-4 w-4" /> Recycling powers your next bloom</div></div>
+        </section>
         </>
       )}
 
