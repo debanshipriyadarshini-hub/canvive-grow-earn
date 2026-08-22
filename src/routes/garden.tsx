@@ -101,13 +101,46 @@ function Garden() {
   return (
     <div className="garden-page">
       <header className="garden-header-stack">
-        <p className="garden-kicker"><Leaf className="h-4 w-4" /> Your impact, in bloom</p>
-        <h1>My Impact Garden</h1>
-        <p className="garden-header-stat">{state.cans} cans recycled</p>
-        <p className="garden-header-copy">Recycle more cans. Watch your world come alive.</p>
+        <p className="garden-kicker"><Sprout className="h-4 w-4" /> Your living collection</p>
+        <h1>My CanVive Garden</h1>
+        <p className="garden-header-copy">Switch between your garden views and watch your recycled cans become part of your journey.</p>
       </header>
 
       <p className="garden-header-note">Recycle cans from Home to grow your plant 🌱</p>
+
+      <section className="garden-section garden-collection-section">
+        <div className="garden-section-heading"><span className="garden-collection-count">{state.garden.length} / 6 planted</span></div>
+        <div className="garden-collection-grid">
+          {state.garden.map((p) => {
+            const m = plantMeta(p.id);
+            return (
+              <button
+                key={p.id}
+                onClick={() => setActivePlant(p.id)}
+                className={cn(
+                  "garden-collection-card overflow-hidden text-left",
+                  p.id === state.activePlant && "is-active",
+                )}
+              >
+                <div className="h-28">
+                  <PlantArt id={p.id} growth={p.growth} />
+                </div>
+                <div className="p-4">
+                  <p className="text-sm font-medium">
+                    {m.emoji} {m.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {p.growth} / {GROWTH_GOAL} cans · {m.stages[stageIndex(p.growth)]}
+                  </p>
+                  <div className="mt-2">
+                    <Meter value={p.growth} max={GROWTH_GOAL} />
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="garden-impact-strip" aria-label="Garden impact summary">
         <div className="garden-impact-stat"><span className="garden-stat-icon garden-stat-icon-green"><Recycle /></span><div><strong>{state.cans}</strong><span>cans recycled</span></div></div>
@@ -161,40 +194,6 @@ function Garden() {
           </div><div className="garden-impact-panel"><div className="garden-impact-icon"><Recycle /></div><p className="garden-card-eyebrow">Your contribution</p><h3>{state.cans} cans recycled</h3><p>That is <strong>{state.points} points</strong> moving through your CanVive journey.</p><div className="garden-impact-rule"><Droplets className="h-4 w-4" /> Recycling powers your next bloom</div></div></div></section>
         </>
       )}
-
-      <section className="garden-section">
-        <div className="garden-section-heading"><div><p className="garden-kicker"><Sprout className="h-4 w-4" /> Your living collection</p><h2>My CanVive Garden</h2><p>Switch between the worlds you are growing.</p></div><span className="garden-collection-count">{state.garden.length} / 6 planted</span></div>
-        <div className="garden-collection-grid">
-          {state.garden.map((p) => {
-            const m = plantMeta(p.id);
-            return (
-              <button
-                key={p.id}
-                onClick={() => setActivePlant(p.id)}
-                className={cn(
-                  "garden-collection-card overflow-hidden text-left",
-                  p.id === state.activePlant && "is-active",
-                )}
-              >
-                <div className="h-28">
-                  <PlantArt id={p.id} growth={p.growth} />
-                </div>
-                <div className="p-4">
-                  <p className="text-sm font-medium">
-                    {m.emoji} {m.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {p.growth} / {GROWTH_GOAL} cans · {m.stages[stageIndex(p.growth)]}
-                  </p>
-                  <div className="mt-2">
-                    <Meter value={p.growth} max={GROWTH_GOAL} />
-                  </div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </section>
 
       <section className="garden-section">
         <div className="garden-section-heading"><div><p className="garden-kicker"><Trophy className="h-4 w-4" /> Keep growing</p><h2>Garden milestones</h2><p>Small actions build a healthier world.</p></div></div>

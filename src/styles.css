@@ -192,7 +192,7 @@
 
 .garden-page h1, .garden-page h2, .garden-page h3 { color: var(--garden-ink); }
 .garden-page .garden-kicker, .garden-card-eyebrow { display: flex; align-items: center; gap: .45rem; color: var(--garden-green); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.garden-intro-band { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin: -1rem 0 1.5rem; padding: 1.5rem 1.75rem; border-radius: 1.5rem; background: linear-gradient(120deg, #f2fff5, #fff5f2 72%); border: 1px solid #a8e6b5; }
+.garden-intro-band { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin: 0 0 1.5rem; padding: 1.5rem 1.75rem; border-radius: 1.5rem; background: linear-gradient(120deg, #f2fff5, #fff5f2 72%); border: 1px solid #a8e6b5; }
 .garden-intro-band h2 { margin-top: .45rem; font-size: clamp(1.5rem, 3vw, 2.25rem); }
 .garden-intro-band p:last-child { max-width: 38rem; margin-top: .4rem; color: var(--garden-muted); }
 .garden-intro-icon { width: 4.5rem; height: 4.5rem; color: var(--garden-green); opacity: .8; }
@@ -229,7 +229,7 @@
 .garden-impact-panel { background: linear-gradient(145deg, #fffdf5, #fff0f3); border-color: #ffd84d; }
 .garden-impact-icon { display: grid; width: 2.7rem; height: 2.7rem; place-items: center; margin-bottom: 1rem; border-radius: 1rem; background: #ffd84d; color: #2f2933; }
 .garden-impact-panel h3 { margin-top: .5rem; font-family: var(--font-display); font-size: 1.65rem; }.garden-impact-panel > p:not(.garden-card-eyebrow) { margin-top: .45rem; color: var(--garden-muted); font-size: .85rem; }.garden-impact-rule { display: flex; align-items: center; gap: .45rem; margin-top: 1.5rem; color: #e95668; font-size: .75rem; font-weight: 700; }
-.garden-section { margin-top: 3rem; }.garden-section-heading { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem; }.garden-section-heading h2 { margin-top: .35rem; font-size: 1.8rem; }.garden-section-heading p:last-child { margin-top: .25rem; color: var(--garden-muted); font-size: .85rem; }
+.garden-section { margin-top: 3rem; }.garden-collection-section { margin-top: 0; }.garden-section-heading { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem; }.garden-collection-section .garden-section-heading { justify-content: flex-end; }.garden-section-heading h2 { margin-top: .35rem; font-size: 1.8rem; }.garden-section-heading p:last-child { margin-top: .25rem; color: var(--garden-muted); font-size: .85rem; }
 .garden-collection-grid, .garden-achievement-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 1.25rem; }.garden-collection-card { overflow: hidden; border: 1px solid #e8dfe2; border-radius: 1.25rem; background: #fff; text-align: left; transition: transform .2s ease, border-color .2s ease; }.garden-collection-card:hover { transform: translateY(-3px); }.garden-collection-card.is-active { border: 2px solid var(--garden-coral); }.garden-collection-art { height: 8rem; background: #f2fff5; }.garden-collection-copy { padding: .85rem; }.garden-collection-copy > div:first-child { font-size: .85rem; font-weight: 700; }.garden-collection-copy > div:first-child span { color: var(--garden-green); }.garden-collection-copy .h-2\.5 { margin-top: .6rem; }
 .garden-achievement-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }.garden-achievement { display: flex; gap: .75rem; min-height: 5rem; padding: 1rem; border: 1px solid #e8dfe2; border-radius: 1rem; background: #fff; opacity: .58; }.garden-achievement.is-done { border-color: #a8e6b5; background: #f2fff5; opacity: 1; }.garden-achievement-mark { display: grid; width: 2rem; height: 2rem; flex: 0 0 auto; place-items: center; border-radius: .7rem; background: #f3eaff; color: #8b5cf6; }.garden-achievement.is-done .garden-achievement-mark { background: #ffd84d; color: #2f2933; }.garden-achievement p { font-size: .82rem; font-weight: 700; }.garden-achievement p + p, .garden-achievement span { display: block; margin-top: .25rem; color: var(--garden-muted); font-size: .7rem; }.garden-section-sparkle { color: #a875e8; }.garden-dialog-art { height: 12rem; overflow: hidden; border-radius: 1rem; }
 .garden-plant-art { transition: filter .3s ease; }.garden-stage-0 { filter: saturate(.7); }.garden-stage-4 { filter: saturate(1.12) contrast(1.03); }
@@ -248,10 +248,10 @@
   --garden-pink: #ff9db5;
   --garden-water-deep: #2f855a;
 }
-.garden-page .garden-header-stack { display: flex; flex-direction: column; align-items: flex-start; gap: .45rem; margin-bottom: 1rem; }
+.garden-page .garden-header-stack { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; margin-bottom: 2rem; }
 .garden-page .garden-header-stack h1 { margin: 0; font-size: clamp(2.25rem, 5vw, 4.2rem); line-height: .98; }
 .garden-page .garden-header-stat { margin: 0; color: var(--garden-ink); font-family: var(--font-display); font-size: clamp(1.35rem, 2vw, 2rem); font-weight: 700; }
-.garden-page .garden-header-copy { margin: 0; max-width: 38rem; color: var(--garden-muted); font-size: 1rem; }
+.garden-page .garden-header-copy { margin: 0; max-width: 38rem; color: var(--garden-muted); font-size: 1rem; line-height: 1.6; }
 .garden-page .garden-header-note { margin: 0 0 1.25rem; color: var(--garden-muted); font-size: .9rem; }
 .garden-page .garden-heading-picker { margin-bottom: 2rem; }
 .garden-page .garden-heading-picker h1 { max-width: 32rem; }
