@@ -230,3 +230,136 @@ export const LEVELS = [
 ];
 
 export const levelFor = (cans: number) => LEVELS.find((l) => cans >= l.min && cans <= l.max)!;
+
+export type MerchProduct = {
+  id: string;
+  name: string;
+  description: string;
+  story: string;
+  category: "accessories" | "badges" | "desk" | "lighting";
+  priceRupees: number;
+  pointsCost: number;
+  icon: string;
+  tag: string;
+  available: boolean;
+};
+
+export const MERCH_PRODUCTS: MerchProduct[] = [
+  {
+    id: "star-keychain",
+    name: "Star Can Keychain",
+    description: "A small star-shaped keychain handcrafted from a collected aluminium beverage can.",
+    story: "This keychain started as an aluminium can. Through collection and creative reuse, it was transformed into something you can carry every day.",
+    category: "accessories",
+    priceRupees: 99,
+    pointsCost: 400,
+    icon: "⭐",
+    tag: "Made from 1 collected can",
+    available: true,
+  },
+  {
+    id: "can-badges-eco-warrior",
+    name: "Eco Warrior Badge",
+    description: "A collectible badge made from aluminium cans, featuring the Eco Warrior design.",
+    story: "Transform your recycling commitment into wearable pride. Each badge represents your dedication to environmental sustainability.",
+    category: "badges",
+    priceRupees: 49,
+    pointsCost: 200,
+    icon: "🛡️",
+    tag: "Made from recycled aluminium",
+    available: true,
+  },
+  {
+    id: "can-badges-recycle-hero",
+    name: "Recycle Hero Badge",
+    description: "A circular badge celebrating recycling heroes made from upcycled aluminium.",
+    story: "Every can you collect makes you a hero. This badge honors your commitment to building a circular economy.",
+    category: "badges",
+    priceRupees: 49,
+    pointsCost: 200,
+    icon: "🌍",
+    tag: "Made from recycled aluminium",
+    available: true,
+  },
+  {
+    id: "can-badges-planet-protector",
+    name: "Planet Protector Badge",
+    description: "A leaf-inspired badge protecting the planet, crafted from aluminium cans.",
+    story: "Protect our planet, one can at a time. This badge symbolizes your role in global environmental change.",
+    category: "badges",
+    priceRupees: 49,
+    pointsCost: 200,
+    icon: "🌿",
+    tag: "Made from recycled aluminium",
+    available: true,
+  },
+  {
+    id: "badge-set",
+    name: "CanVive Badge Collection Set",
+    description: "Collect all three unique badges in this premium set. Eco Warrior, Recycle Hero, and Planet Protector.",
+    story: "Build your complete badge collection and show your commitment to CanVive's mission across all aspects of sustainability.",
+    category: "badges",
+    priceRupees: 249,
+    pointsCost: 900,
+    icon: "🎖️",
+    tag: "3 unique collectible badges",
+    available: true,
+  },
+  {
+    id: "can-pen-stand",
+    name: "Upcycled Can Pen Stand",
+    description: "A functional desk organizer created by transforming collected cans into a smooth, modern workspace accessory.",
+    story: "Watch waste become workspace inspiration. This pen stand keeps your desk organized while telling the story of circular design.",
+    category: "desk",
+    priceRupees: 149,
+    pointsCost: 600,
+    icon: "✏️",
+    tag: "1 can. A new purpose.",
+    available: true,
+  },
+  {
+    id: "mini-lamp",
+    name: "Upcycled Mini Lamp",
+    description: "A compact decorative lamp created by creatively transforming collected aluminium cans into ambient lighting.",
+    story: "Waste transformed into light. This lamp illuminates both your space and the possibilities of sustainable design.",
+    category: "lighting",
+    priceRupees: 299,
+    pointsCost: 1200,
+    icon: "💡",
+    tag: "Waste transformed into light.",
+    available: true,
+  },
+];
+
+export const MERCH_IMPACT_STEPS = [
+  {
+    step: 1,
+    title: "Can Collected",
+    emoji: "🥫",
+    description: "A beverage can is collected through the CanVive network.",
+  },
+  {
+    step: 2,
+    title: "Sorted",
+    emoji: "📋",
+    description: "Cans are sorted by material and quality.",
+  },
+  {
+    step: 3,
+    title: "Recycled & Upcycled",
+    emoji: "♻️",
+    description: "Materials are processed and prepared for creative transformation.",
+  },
+  {
+    step: 4,
+    title: "Crafted into Product",
+    emoji: "🛠️",
+    description: "Artisans transform aluminium into unique merchandise.",
+  },
+  {
+    step: 5,
+    title: "Redeemed or Purchased",
+    emoji: "🎁",
+    description: "Products reach you, closing the circular loop.",
+  },
+];

@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   LogOut,
+  ShoppingBag,
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { useCanVive } from "@/lib/canvive/store";
@@ -23,6 +24,7 @@ const NAV = [
   { to: "/contributions", label: "Contributions", icon: Receipt },
   { to: "/garden", label: "Impact Garden", icon: Sprout },
   { to: "/rewards", label: "Rewards", icon: Gift },
+  { to: "/merch", label: "Merch Store", icon: ShoppingBag },
   { to: "/challenges", label: "Challenges", icon: Target },
   { to: "/leaderboard", label: "Leaderboard", icon: Trophy },
   { to: "/stations", label: "Stations", icon: MapPin },

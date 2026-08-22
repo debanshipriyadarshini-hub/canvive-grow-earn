@@ -10,6 +10,7 @@ import {
   plantMeta,
   stageIndex,
   type PlantId,
+  type MerchProduct,
 } from "./data";
 
 export type Contribution = {
@@ -110,6 +111,7 @@ type Ctx = {
   choosePlant: (id: PlantId) => void;
   setActivePlant: (id: PlantId) => void;
   redeem: (rewardId: string) => Redemption | null;
+  redeemMerch: (product: MerchProduct) => Redemption | null;
   claimChallenge: (id: string) => void;
   reset: () => void;
   rank: number;
@@ -301,6 +303,31 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
     return created;
   }, []);
 
+  const redeemMerch = useCallback((product: MerchProduct) => {
+    let created: Redemption | null = null;
+    setState((s) => {
+      if (s.points < product.pointsCost) return s;
+      created = {
+        id: uid(),
+        rewardId: `merch-${product.id}`,
+        name: product.name,
+        code: `MERCH-${Math.floor(10000 + Math.random() * 89999)}`,
+        points: product.pointsCost,
+        date: iso(new Date()),
+      };
+      return {
+        ...s,
+        points: s.points - product.pointsCost,
+        redemptions: [created, ...s.redemptions],
+        activity: [
+          { id: uid(), label: `Redeemed ${product.name}`, points: -product.pointsCost, date: iso(new Date()) },
+          ...s.activity,
+        ].slice(0, 12),
+      };
+    });
+    return created;
+  }, []);
+
   const claimChallenge = useCallback((id: string) => {
     const challenge = CHALLENGES.find((c) => c.id === id);
     if (!challenge) return;
@@ -332,6 +359,7 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
     choosePlant,
     setActivePlant,
     redeem,
+    redeemMerch,
     claimChallenge,
     reset,
     rank,

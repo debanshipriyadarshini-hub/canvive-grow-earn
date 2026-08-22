@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GardenRouteImport } from './routes/garden'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MerchRouteImport } from './routes/merch'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RewardsRouteImport } from './routes/rewards'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -56,6 +57,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MerchRoute = MerchRouteImport.update({
+  id: '/merch',
+  path: '/merch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/garden': typeof GardenRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/merch': typeof MerchRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
   '/signup': typeof SignupRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/garden': typeof GardenRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/merch': typeof MerchRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
   '/signup': typeof SignupRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/garden': typeof GardenRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/merch': typeof MerchRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
   '/signup': typeof SignupRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/garden'
     | '/leaderboard'
     | '/login'
+    | '/merch'
     | '/profile'
     | '/rewards'
     | '/signup'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/garden'
     | '/leaderboard'
     | '/login'
+    | '/merch'
     | '/profile'
     | '/rewards'
     | '/signup'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/garden'
     | '/leaderboard'
     | '/login'
+    | '/merch'
     | '/profile'
     | '/rewards'
     | '/signup'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   GardenRoute: typeof GardenRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
+  MerchRoute: typeof MerchRoute
   ProfileRoute: typeof ProfileRoute
   RewardsRoute: typeof RewardsRoute
   SignupRoute: typeof SignupRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/merch': {
+      id: '/merch'
+      path: '/merch'
+      fullPath: '/merch'
+      preLoaderRoute: typeof MerchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -263,6 +283,7 @@ const rootRouteChildren: RootRouteChildren = {
   GardenRoute: GardenRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
+  MerchRoute: MerchRoute,
   ProfileRoute: ProfileRoute,
   RewardsRoute: RewardsRoute,
   SignupRoute: SignupRoute,
