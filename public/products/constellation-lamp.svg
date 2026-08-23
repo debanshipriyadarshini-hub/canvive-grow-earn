@@ -1,0 +1,44 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="190" y1="110" x2="980" y2="1060" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF0ED"/>
+      <stop offset="1" stop-color="#DDE8DB"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 600) rotate(90) scale(440 350)">
+      <stop stop-color="#FCE7A1"/>
+      <stop offset="0.35" stop-color="#F3B65B"/>
+      <stop offset="1" stop-color="#9A5E20" stop-opacity="0.12"/>
+    </radialGradient>
+    <linearGradient id="can" x1="430" y1="235" x2="742" y2="1006" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E2228"/>
+      <stop offset="0.5" stop-color="#0C0F13"/>
+      <stop offset="1" stop-color="#2A2E35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" rx="80" fill="url(#bg)"/>
+  <g>
+    <ellipse cx="600" cy="995" rx="270" ry="88" fill="#D7E2D0"/>
+    <path d="M458 260C458 233.49 480.49 212 507 212H693C719.51 212 742 233.49 742 260V872C742 898.51 719.51 921 693 921H507C480.49 921 458 898.51 458 872V260Z" fill="url(#can)"/>
+    <path d="M515 250C515 232.327 529.327 218 547 218H653C670.673 218 685 232.327 685 250V894C685 911.673 670.673 926 653 926H547C529.327 926 515 911.673 515 894V250Z" fill="#11171D" opacity="0.8"/>
+    <circle cx="600" cy="430" r="250" fill="url(#glow)" opacity="0.7"/>
+    <g opacity="0.82">
+      <circle cx="600" cy="430" r="170" fill="#FCE6A5" opacity="0.12"/>
+      <circle cx="600" cy="430" r="125" fill="#F8D98D" opacity="0.12"/>
+      <path d="M496 382L530 342L564 382L600 332L636 382L670 342L704 382" stroke="#FDE6B4" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M510 485L535 431L570 480L600 432L631 480L666 431L690 485" stroke="#FBD98A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M482 558L524 508L559 559L600 515L641 559L676 508L718 558" stroke="#F9C46A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g fill="#F6C968">
+      <circle cx="600" cy="235" r="9"/>
+      <circle cx="600" cy="352" r="9"/>
+      <circle cx="600" cy="576" r="9"/>
+      <circle cx="600" cy="802" r="9"/>
+      <circle cx="517" cy="290" r="8"/>
+      <circle cx="683" cy="290" r="8"/>
+      <circle cx="696" cy="628" r="8"/>
+      <circle cx="504" cy="628" r="8"/>
+    </g>
+    <rect x="506" y="876" width="188" height="86" rx="20" fill="#0E1317"/>
+    <rect x="536" y="900" width="128" height="18" rx="9" fill="#F0C96C" opacity="0.7"/>
+  </g>
+</svg>
