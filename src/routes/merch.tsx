@@ -126,11 +126,11 @@ function MerchStore() {
               key={product.id}
               className="group flex flex-col overflow-hidden rounded-[28px] border border-[#dfead6] bg-[#fffdfa] shadow-[0_18px_42px_rgba(28,54,41,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(28,54,41,0.12)]"
             >
-              <div className="relative overflow-hidden bg-gradient-to-br from-[#edf5e8] via-[#faf3e7] to-[#f4ddd0]">
+              <div className="relative flex h-72 items-center justify-center overflow-hidden bg-gradient-to-br from-[#edf5e8] via-[#faf3e7] to-[#f4ddd0]">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-72 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               </div>
 

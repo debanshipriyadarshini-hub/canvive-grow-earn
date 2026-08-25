@@ -1,3 +1,9 @@
+import colourfulCanStandsImage from "../../../download (11).jpg";
+import starPatternBadgeImage from "../../../uğur böceği rozet tarımı ❤️🔥.jpg";
+import nightLampImage from "../../../an aesthetic night lamp.jpg";
+import spiderPatternBadgeImage from "../../../Batch _ Art & craft _ Design spiderman _ Cool batches.jpg";
+import starKeychainImage from "../../../download (10).jpg";
+
 export type PlantId = "sunflower" | "rose" | "sakura" | "lavender" | "lily" | "lotus";
 
 export type PlantMeta = {
@@ -253,7 +259,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     category: "accessories",
     priceRupees: 100,
     pointsCost: 400,
-    image: "./products/star-can-keychain.svg",
+    image: starKeychainImage,
     labels: ["Upcycled Aluminium", "Handmade", "Limited Edition"],
     available: true,
   },
@@ -265,7 +271,7 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     category: "home",
     priceRupees: 300,
     pointsCost: 1200,
-    image: "./products/constellation-lamp.svg",
+    image: nightLampImage,
     labels: ["Upcycled Can", "Ambient Light", "Handmade"],
     available: true,
   },
@@ -277,31 +283,31 @@ export const MERCH_PRODUCTS: MerchProduct[] = [
     category: "desk",
     priceRupees: 200,
     pointsCost: 800,
-    image: "./products/can-pen-stand.svg",
+    image: colourfulCanStandsImage,
     labels: ["Upcycled Aluminium", "Functional Design", "Handmade"],
     available: true,
   },
   {
     id: "star-badge",
-    name: "Star Badge",
+    name: "CanVive Upcycled Star Badge",
     description: "A collectible handmade badge created from reclaimed aluminium cans and transformed into a unique wearable accessory.",
     story: "A bright star badge made from metal waste and reimagined as a symbol of daily action for a cleaner planet.",
     category: "collectibles",
     priceRupees: 50,
     pointsCost: 200,
-    image: "./products/upcycled-badges.svg",
+    image: starPatternBadgeImage,
     labels: ["Collectible", "Upcycled Aluminium", "Handmade"],
     available: true,
   },
   {
     id: "spider-badge",
-    name: "Spider Badge",
+    name: "CanVive Upcycled Spider Badge",
     description: "A collectible handmade badge created from reclaimed aluminium cans and transformed into a unique wearable accessory.",
     story: "The spider-inspired design celebrates craft, curiosity and the creative second life of collected metal.",
     category: "collectibles",
     priceRupees: 50,
     pointsCost: 200,
-    image: "./products/upcycled-badges.svg",
+    image: spiderPatternBadgeImage,
     labels: ["Collectible", "Upcycled Aluminium", "Handmade"],
     available: true,
   },
