@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/canvive/AppShell";
+import { CampusMap } from "@/components/canvive/CampusMap";
 import { Meter } from "@/components/canvive/StatCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
