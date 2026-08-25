@@ -173,7 +173,7 @@ export function CampusMap({ onSelect }: { onSelect: (id: string) => void }) {
       </span>
 
       {STATIONS.map((s) => {
-        const t = markerTheme[s.status] ?? markerTheme.Active;
+        const t = markerTheme[s.status] ?? markerTheme["Active"]!;
         return (
           <button
             key={s.id}
