@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/canvive/AppShell";
+import { CampusMap } from "@/components/canvive/CampusMap";
 import { Meter } from "@/components/canvive/StatCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -43,29 +43,8 @@ function Stations() {
         subtitle="Find the nearest place to give your next can a second life."
       />
 
-      <div className="card-soft relative mb-8 h-64 overflow-hidden sm:h-80">
-        <svg viewBox="0 0 100 60" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
-          <rect width="100" height="60" fill="var(--sage-soft)" />
-          <rect x="0" y="24" width="100" height="6" fill="var(--beige)" />
-          <rect x="44" y="0" width="6" height="60" fill="var(--beige)" />
-          <rect x="8" y="6" width="26" height="14" rx="2" fill="var(--card)" />
-          <rect x="58" y="8" width="30" height="12" rx="2" fill="var(--card)" />
-          <rect x="12" y="36" width="24" height="16" rx="2" fill="var(--card)" />
-          <ellipse cx="78" cy="46" rx="14" ry="8" fill="var(--water)" />
-        </svg>
-        {STATIONS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => setOpenId(s.id)}
-            style={{ left: `${s.x}%`, top: `${s.y}%` }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-card px-3 py-1.5 text-xs font-medium shadow-soft transition-transform hover:-translate-y-[55%]"
-          >
-            <MapPin className="mr-1 inline h-3.5 w-3.5" aria-hidden />
-            {s.name}
-          </button>
-        ))}
-        <p className="absolute bottom-3 right-4 text-xs text-muted-foreground">Illustrative campus map (prototype)</p>
-      </div>
+      <CampusMap onSelect={setOpenId} />
+
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {STATIONS.map((s) => (
