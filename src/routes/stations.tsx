@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/canvive/AppShell";
+import { StationMap } from "@/components/canvive/StationMap";
 import { Meter } from "@/components/canvive/StatCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -26,15 +27,22 @@ export const Route = createFileRoute("/stations")({
 });
 
 const statusTone: Record<string, string> = {
-  Active: "bg-sage-soft",
-  "Almost Full": "bg-coral-soft",
-  Unavailable: "bg-beige",
+  Available: "bg-sage-soft",
+  Busy: "bg-sun",
+  Offline: "bg-beige",
 };
 
 function Stations() {
   const { recycleCan } = useCanVive();
   const [openId, setOpenId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [focusId, setFocusId] = useState<string | null>(null);
   const station = STATIONS.find((s) => s.id === openId);
+  const normalizedSearch = search.trim().toLowerCase();
+  const visibleStations = STATIONS.filter((s) =>
+    `${s.name} ${s.location} ${s.address}`.toLowerCase().includes(normalizedSearch),
+  );
+  const focusStation = STATIONS.find((s) => s.id === focusId);
 
   return (
     <>
@@ -43,37 +51,29 @@ function Stations() {
         subtitle="Find the nearest place to give your next can a second life."
       />
 
-      <div className="card-soft relative mb-8 h-64 overflow-hidden sm:h-80">
-        <svg viewBox="0 0 100 60" preserveAspectRatio="none" className="h-full w-full" aria-hidden>
-          <rect width="100" height="60" fill="var(--sage-soft)" />
-          <rect x="0" y="24" width="100" height="6" fill="var(--beige)" />
-          <rect x="44" y="0" width="6" height="60" fill="var(--beige)" />
-          <rect x="8" y="6" width="26" height="14" rx="2" fill="var(--card)" />
-          <rect x="58" y="8" width="30" height="12" rx="2" fill="var(--card)" />
-          <rect x="12" y="36" width="24" height="16" rx="2" fill="var(--card)" />
-          <ellipse cx="78" cy="46" rx="14" ry="8" fill="var(--water)" />
-        </svg>
-        {STATIONS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => setOpenId(s.id)}
-            style={{ left: `${s.x}%`, top: `${s.y}%` }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-card px-3 py-1.5 text-xs font-medium shadow-soft transition-transform hover:-translate-y-[55%]"
-          >
-            <MapPin className="mr-1 inline h-3.5 w-3.5" aria-hidden />
-            {s.name}
-          </button>
-        ))}
-        <p className="absolute bottom-3 right-4 text-xs text-muted-foreground">Illustrative campus map (prototype)</p>
-      </div>
+      <StationMap
+        stations={visibleStations}
+        search={search}
+        onSearchChange={(value) => {
+          setSearch(value);
+          setFocusId(null);
+        }}
+        focusStation={focusStation}
+      />
 
+      <div className="mb-4 flex items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl">Nearby CanVive Stations</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{visibleStations.length} station{visibleStations.length === 1 ? "" : "s"} found around campus.</p>
+        </div>
+      </div>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {STATIONS.map((s) => (
+        {visibleStations.map((s) => (
           <article key={s.id} className="card-soft flex flex-col p-6">
             <div className="flex items-start justify-between gap-3">
               <h2 className="text-lg">{s.name}</h2>
-              <span className={cn("rounded-full px-3 py-1 text-xs font-medium", statusTone[s.status])}>
-                {s.status}
+              <span className={cn("rounded-full px-3 py-1 text-xs font-medium", statusTone[s.mapStatus])}>
+                {s.mapStatus}
               </span>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">{s.address}</p>
@@ -82,9 +82,19 @@ function Stations() {
               <Meter value={s.capacity} max={100} tone={s.capacity > 80 ? "coral" : "sage"} />
             </div>
             <p className="mt-3 text-sm text-muted-foreground">Distance: {s.distance}</p>
-            <Button variant="outline" className="mt-auto pt-2" onClick={() => setOpenId(s.id)}>
-              View Station
-            </Button>
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
+              <Button variant="outline" size="sm" onClick={() => setFocusId(s.id)}>
+                <MapPin aria-hidden /> View on Map
+              </Button>
+              <Button variant="ghost" size="sm" asChild>
+                <a href={`https://www.google.com/maps/dir/?api=1&destination=${s.latitude},${s.longitude}`} target="_blank" rel="noreferrer">
+                  <Navigation aria-hidden /> Directions
+                </a>
+              </Button>
+              <Button variant="link" size="sm" onClick={() => setOpenId(s.id)}>
+                View Station
+              </Button>
+            </div>
           </article>
         ))}
       </div>

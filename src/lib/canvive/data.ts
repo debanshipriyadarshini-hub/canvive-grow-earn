@@ -138,50 +138,111 @@ export const ACHIEVEMENTS = [
   { id: "challenge", name: "Challenge Winner", description: "Complete a challenge." },
 ];
 
-export const STATIONS = [
+export type StationMapStatus = "Available" | "Busy" | "Offline";
+
+export type Station = {
+  id: string;
+  name: string;
+  status: "Active" | "Almost Full" | "Unavailable";
+  mapStatus: StationMapStatus;
+  capacity: number;
+  distance: string;
+  hours: string;
+  address: string;
+  location: string;
+  description: string;
+  type: string;
+  latitude: number;
+  longitude: number;
+  x: number;
+  y: number;
+};
+
+export const STATIONS: Station[] = [
   {
     id: "campus",
-    name: "College Campus",
+    name: "CanVive – Main Gate",
     status: "Active" as const,
+    mapStatus: "Available",
     capacity: 70,
     distance: "0.3 km",
     hours: "Open 8:00 – 22:00",
     address: "Main academic block, near the library entrance",
+    location: "Cummins College, Pune",
+    description: "The convenient collection point beside the main campus entrance.",
+    type: "College Campus Recycling Station",
+    latitude: 18.4916,
+    longitude: 73.8206,
     x: 30,
     y: 38,
   },
   {
     id: "cafe",
-    name: "Café Station",
+    name: "CanVive – College Canteen",
     status: "Active" as const,
+    mapStatus: "Available",
     capacity: 35,
     distance: "0.7 km",
     hours: "Open 9:00 – 23:00",
     address: "Beside the central canteen courtyard",
+    location: "Cummins College Canteen, Pune",
+    description: "A busy, easy-to-reach station near the student dining area.",
+    type: "College Campus Recycling Station",
+    latitude: 18.4924,
+    longitude: 73.8212,
     x: 62,
     y: 60,
   },
   {
     id: "vending",
-    name: "Vending Zone",
+    name: "CanVive – Library",
     status: "Almost Full" as const,
+    mapStatus: "Busy",
     capacity: 82,
     distance: "1.1 km",
     hours: "Open 24 hours",
-    address: "Hostel block C, vending corridor",
+    address: "Library entrance, academic block",
+    location: "Cummins College Library, Pune",
+    description: "A high-use station for students passing through the library.",
+    type: "College Campus Recycling Station",
+    latitude: 18.4909,
+    longitude: 73.8199,
     x: 76,
     y: 26,
   },
   {
     id: "sports",
-    name: "Sports Complex",
+    name: "CanVive – Hostel Area",
     status: "Unavailable" as const,
+    mapStatus: "Offline",
     capacity: 100,
     distance: "1.6 km",
-    hours: "Under maintenance",
-    address: "Gate 4, outside the athletics ground",
+    hours: "Temporarily offline",
+    address: "Hostel area, near the vending corridor",
+    location: "Cummins College Hostel Area, Pune",
+    description: "This station is temporarily unavailable for maintenance.",
+    type: "College Campus Recycling Station",
+    latitude: 18.4931,
+    longitude: 73.8198,
     x: 44,
     y: 78,
+  },
+  {
+    id: "activity",
+    name: "CanVive – Student Activity Centre",
+    status: "Active" as const,
+    mapStatus: "Available",
+    capacity: 48,
+    distance: "1.2 km",
+    hours: "Open 8:00 – 21:00",
+    address: "Student Activity Centre courtyard",
+    location: "Cummins College Student Activity Centre, Pune",
+    description: "A collection point close to clubs, events, and student groups.",
+    type: "College Campus Recycling Station",
+    latitude: 18.4903,
+    longitude: 73.8214,
+    x: 22,
+    y: 65,
   },
 ];
 

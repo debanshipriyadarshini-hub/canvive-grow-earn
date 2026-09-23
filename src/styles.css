@@ -179,6 +179,53 @@
   }
 }
 
+.canvive-map {
+  height: 520px;
+  width: 100%;
+  border-radius: calc(var(--radius-2xl) - 4px);
+  overflow: hidden;
+}
+
+.canvive-marker {
+  border: 0;
+  background: transparent;
+}
+
+.canvive-marker-dot {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 4px solid white;
+  border-radius: 50% 50% 50% 0;
+  background: var(--sage);
+  box-shadow: 0 5px 12px rgba(55, 65, 81, 0.25);
+  color: var(--primary-foreground);
+  transform: rotate(-45deg);
+}
+
+.canvive-marker-leaf {
+  font-size: 1.2rem;
+  font-weight: 700;
+  transform: rotate(45deg);
+}
+
+.canvive-popup p,
+.canvive-popup span,
+.canvive-popup a {
+  font-family: var(--font-sans);
+}
+
+.canvive-popup .font-display {
+  font-family: var(--font-display);
+}
+
+@media (max-width: 640px) {
+  .canvive-map {
+    height: 390px;
+  }
+}
+
 /* Impact Garden atmosphere and responsive composition. */
 .garden-page {
   --garden-ink: #2f2933;
