@@ -326,7 +326,7 @@
 .garden-page .garden-impact-panel { height: 100%; }
 
 /* ---- CanVive campus map ---- */
-.cmap { position: relative; max-width: 60rem; margin-inline: auto; overflow: hidden; margin-bottom: 2rem; border: 1px solid #cdeed8; border-radius: 1.75rem; background: #fffdf7; }
+.cmap { position: relative; width: 100%; max-width: 60rem; margin-inline: auto; overflow: hidden; margin-bottom: 2rem; border: 1px solid #cdeed8; border-radius: 1.75rem; background: #fffdf7; }
 .cmap-svg { display: block; width: 100%; height: auto; aspect-ratio: 100 / 62; }
 .cmap-route { stroke: #ff8fa3; stroke-width: .55; stroke-dasharray: 1.6 1.8; stroke-linecap: round; opacity: .38; transition: opacity .25s ease, stroke-width .25s ease; }
 .cmap-route.is-active { stroke: #e2586b; stroke-width: .85; opacity: .95; animation: cmap-dash 1.4s linear infinite; }
