@@ -1,13 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-<<<<<<< HEAD
 import { MapPin, Navigation } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/canvive/AppShell";
 import { StationMap } from "@/components/canvive/StationMap";
-=======
-import { AppShell, PageHeader } from "@/components/canvive/AppShell";
-import { CampusMap } from "@/components/canvive/CampusMap";
->>>>>>> 0bfa72da304a6946f0309eafb389e73eae824f3a
 import { Meter } from "@/components/canvive/StatCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -56,7 +51,6 @@ function Stations() {
         subtitle="Find the nearest place to give your next can a second life."
       />
 
-<<<<<<< HEAD
       <StationMap
         stations={visibleStations}
         search={search}
@@ -66,10 +60,6 @@ function Stations() {
         }}
         focusStation={focusStation}
       />
-=======
-      <CampusMap onSelect={setOpenId} />
-
->>>>>>> 0bfa72da304a6946f0309eafb389e73eae824f3a
 
       <div className="mb-4 flex items-end justify-between gap-3">
         <div>

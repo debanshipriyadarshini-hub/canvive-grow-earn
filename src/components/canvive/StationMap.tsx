@@ -8,7 +8,7 @@ type StationMapProps = {
   stations: Station[];
   search: string;
   onSearchChange: (value: string) => void;
-  focusStation?: Station;
+  focusStation?: Station | undefined;
 };
 
 export function StationMap(props: StationMapProps) {
