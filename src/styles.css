@@ -371,3 +371,37 @@
 .garden-page .garden-progress-panel { display: flex; height: 100%; }
 .garden-page .garden-progress-panel > .card-soft { width: 100%; height: auto; }
 .garden-page .garden-impact-panel { height: 100%; }
+
+/* ---- CanVive campus map ---- */
+.cmap { position: relative; width: 100%; max-width: 60rem; margin-inline: auto; overflow: hidden; margin-bottom: 2rem; border: 1px solid #cdeed8; border-radius: 1.75rem; background: #fffdf7; }
+.cmap-svg { display: block; width: 100%; height: auto; aspect-ratio: 100 / 62; }
+.cmap-route { stroke: #ff8fa3; stroke-width: .55; stroke-dasharray: 1.6 1.8; stroke-linecap: round; opacity: .38; transition: opacity .25s ease, stroke-width .25s ease; }
+.cmap-route.is-active { stroke: #e2586b; stroke-width: .85; opacity: .95; animation: cmap-dash 1.4s linear infinite; }
+@keyframes cmap-dash { to { stroke-dashoffset: -7; } }
+@keyframes cmap-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.8px); } }
+@keyframes cmap-pulse { 0% { transform: scale(.55); opacity: .55; } 70% { transform: scale(1.15); opacity: 0; } 100% { opacity: 0; } }
+@keyframes cmap-sway { 0%, 100% { transform-origin: center bottom; } }
+.cmap-bob { animation: cmap-bob 2.6s ease-in-out infinite; }
+.cmap-ring { fill: rgba(54, 168, 95, .35); transform-origin: center; animation: cmap-pulse 2.6s ease-out infinite; }
+.cmap-sway { animation: cmap-tree 5s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
+@keyframes cmap-tree { 0%, 100% { rotate: -1.2deg; } 50% { rotate: 1.2deg; } }
+.cmap-twinkle { animation: cmap-tw 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes cmap-tw { 0%, 100% { opacity: .75; scale: .9; } 50% { opacity: 1; scale: 1.08; } }
+.cmap-you-label { position: absolute; display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .55rem; border: 1px solid #ffe0c2; border-radius: 999px; background: #fffaf0; box-shadow: 0 6px 14px -10px rgba(47, 41, 51, .6); color: #2f2933; font-size: .68rem; font-weight: 600; white-space: nowrap; transform: translate(-50%, -320%); pointer-events: none; }
+.cmap-you-dot { width: .4rem; height: .4rem; border-radius: 999px; background: #36a85f; }
+.cmap-marker { position: absolute; display: flex; align-items: center; gap: .4rem; padding: .3rem .65rem .3rem .45rem; border: 1px solid color-mix(in oklab, var(--cmap-ring) 45%, white); border-radius: 999px; background: #fff; box-shadow: 0 8px 18px -12px rgba(47, 41, 51, .65); font-size: .72rem; font-weight: 600; transform: translate(-50%, -50%); transition: transform .2s ease, box-shadow .2s ease; }
+.cmap-marker:hover, .cmap-marker:focus-visible { transform: translate(-50%, -60%) scale(1.05); box-shadow: 0 14px 26px -12px var(--cmap-glow); }
+.cmap-marker-dot { position: relative; width: .6rem; height: .6rem; flex: 0 0 auto; border: 2px solid var(--cmap-ring); border-radius: 999px; background: var(--cmap-dot); box-shadow: 0 0 0 3px var(--cmap-glow); }
+.cmap-marker-walk { color: #6b6570; font-size: .62rem; font-weight: 500; }
+.cmap-legend { position: absolute; right: .75rem; bottom: .75rem; display: flex; gap: .7rem; padding: .35rem .7rem; border-radius: 999px; background: rgba(255, 255, 255, .88); color: #6b6570; font-size: .62rem; }
+.cmap-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+.cmap-legend i { width: .45rem; height: .45rem; border-radius: 999px; }
+@media (max-width: 640px) {
+  .cmap-marker { padding: .25rem .5rem .25rem .35rem; font-size: .6rem; }
+  .cmap-marker-walk { display: none; }
+  .cmap-legend { position: static; justify-content: center; margin: 0 .75rem .75rem; border-radius: 1rem; }
+  .cmap-you-label { font-size: .6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmap-bob, .cmap-ring, .cmap-sway, .cmap-twinkle, .cmap-route.is-active { animation: none; }
+}
