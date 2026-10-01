@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import type { Station } from "@/lib/canvive/data";
 import { cn } from "@/lib/utils";
 
-const COLLEGE_CENTER: [number, number] = [18.4916, 73.8206];
+const COLLEGE_CENTER: [number, number] = [18.4861, 73.8162];
 
 const statusStyles = {
   Available: "bg-sage-soft text-primary-foreground",
@@ -29,11 +29,32 @@ const stationIcon = L.divIcon({
   popupAnchor: [0, -42],
 });
 
+const userHereIcon = L.divIcon({
+  className: "canvive-user-marker",
+  html: `
+    <div class="you-are-here-wrapper">
+      <div class="you-are-here-bubble">You are here</div>
+      <div class="you-are-here-pin">
+        <div class="you-are-here-head"></div>
+        <div class="you-are-here-body"></div>
+      </div>
+    </div>
+  `,
+  iconSize: [84, 72],
+  iconAnchor: [42, 60],
+  popupAnchor: [0, -60],
+});
+
 function MapFocus({ station }: { station?: Station }) {
   const map = useMap();
 
   useEffect(() => {
-    if (station) map.flyTo([station.latitude, station.longitude], 18, { duration: 0.7 });
+    if (station) {
+      map.flyTo([station.latitude, station.longitude], 17, { duration: 0.7 });
+      return;
+    }
+
+    map.setView(COLLEGE_CENTER, 16, { animate: true });
   }, [map, station]);
 
   return null;
@@ -47,7 +68,7 @@ type StationMapProps = {
 };
 
 export function StationMapClient({ stations, search, onSearchChange, focusStation }: StationMapProps) {
-  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(COLLEGE_CENTER);
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [openStationId, setOpenStationId] = useState<string | null>(null);
@@ -60,6 +81,7 @@ export function StationMapClient({ stations, search, onSearchChange, focusStatio
   function useMyLocation() {
     if (!navigator.geolocation) {
       setLocationMessage("Location is not available in this browser.");
+      setUserLocation(COLLEGE_CENTER);
       return;
     }
 
@@ -67,12 +89,18 @@ export function StationMapClient({ stations, search, onSearchChange, focusStatio
     setLocationMessage("");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        setUserLocation([coords.latitude, coords.longitude]);
+        const fallbackLocation: [number, number] = [18.4861, 73.8162];
+        const campusRadiusKm = 1.2;
+        const distanceKm = Math.sqrt(
+          (coords.latitude - COLLEGE_CENTER[0]) ** 2 + (coords.longitude - COLLEGE_CENTER[1]) ** 2,
+        ) * 111.32;
+        setUserLocation(distanceKm <= campusRadiusKm ? [coords.latitude, coords.longitude] : fallbackLocation);
         setLocating(false);
       },
       () => {
         setLocating(false);
-        setLocationMessage("We could not access your location. The station map is still available.");
+        setUserLocation(COLLEGE_CENTER);
+        setLocationMessage("Using the campus demo location for this prototype map.");
       },
       { enableHighAccuracy: true, timeout: 10000 },
     );
@@ -98,7 +126,7 @@ export function StationMapClient({ stations, search, onSearchChange, focusStatio
       </div>
 
       <div className="card-soft overflow-hidden p-2">
-        <MapContainer center={COLLEGE_CENTER} zoom={17} scrollWheelZoom className="canvive-map">
+        <MapContainer center={COLLEGE_CENTER} zoom={16} scrollWheelZoom className="canvive-map">
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -132,9 +160,9 @@ export function StationMapClient({ stations, search, onSearchChange, focusStatio
             </Marker>
           ))}
           {userLocation && (
-            <CircleMarker center={userLocation} radius={9} pathOptions={{ color: "#e87967", fillColor: "#e87967", fillOpacity: 0.85 }}>
+            <Marker position={userLocation} icon={userHereIcon} zIndexOffset={1000}>
               <Popup>You are here</Popup>
-            </CircleMarker>
+            </Marker>
           )}
         </MapContainer>
       </div>

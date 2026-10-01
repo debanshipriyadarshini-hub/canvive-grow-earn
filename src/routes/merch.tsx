@@ -52,8 +52,8 @@ function MerchStore() {
   );
 
   const handleRedeem = (product: MerchProduct) => {
-    if (state.points < product.pointsCost) {
-      toast.error(`You need ${product.pointsCost - state.points} more points to redeem this item.`);
+    if (state.points < product.redeemPoints) {
+      toast.error(`You need ${product.redeemPoints - state.points} more points to redeem this item.`);
       return;
     }
 
@@ -119,8 +119,8 @@ function MerchStore() {
 
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
         {filteredProducts.map((product) => {
-          const affordable = state.points >= product.pointsCost;
-          const requiredPoints = Math.max(0, product.pointsCost - state.points);
+          const affordable = state.points >= product.redeemPoints;
+          const requiredPoints = Math.max(0, product.redeemPoints - state.points);
           return (
             <article
               key={product.id}
@@ -160,11 +160,11 @@ function MerchStore() {
                   <div className="flex items-end justify-between">
                     <div>
                       <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Direct Price</div>
-                      <div className="mt-1 font-display text-3xl font-bold text-[#1d2b24]">₹{product.priceRupees}</div>
+                      <div className="mt-1 font-display text-3xl font-bold text-[#1d2b24]">₹{product.directPrice}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Redeem</div>
-                      <div className="mt-1 font-display text-2xl font-bold text-[#e46a3e]">{product.pointsCost} ⭐</div>
+                      <div className="mt-1 font-display text-2xl font-bold text-[#e46a3e]">{product.redeemPoints} ⭐</div>
                     </div>
                   </div>
                 </div>
@@ -178,7 +178,13 @@ function MerchStore() {
                     className="w-full"
                     variant={affordable ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setConfirmProduct(product)}
+                    onClick={() => {
+                      if (!affordable) {
+                        toast.error(`You need ${requiredPoints} more points to redeem this item.`);
+                        return;
+                      }
+                      setConfirmProduct(product);
+                    }}
                   >
                     <Zap className="mr-1.5 h-3.5 w-3.5" />
                     {affordable ? "Redeem with Points" : `Need ${requiredPoints} more points`}
@@ -187,9 +193,9 @@ function MerchStore() {
 
                 {!affordable && (
                   <div className="mt-3 rounded-xl bg-[#fff5ee] px-3 py-2">
-                    <Meter value={state.points} max={product.pointsCost} tone="coral" />
+                    <Meter value={state.points} max={product.redeemPoints} tone="coral" />
                     <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
-                      <span>{state.points} / {product.pointsCost} points</span>
+                      <span>{state.points} / {product.redeemPoints} points</span>
                       <span className="font-medium text-[#d76b49]">More points needed</span>
                     </div>
                   </div>
@@ -230,7 +236,7 @@ function MerchStore() {
             <div className="rounded-xl bg-[#f8f8f5] p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Required Points</span>
-                <span className="font-display text-2xl font-bold text-[#e46a3e]">{confirmProduct?.pointsCost} ⭐</span>
+                <span className="font-display text-2xl font-bold text-[#e46a3e]">{confirmProduct?.redeemPoints} ⭐</span>
               </div>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Your Points</span>
@@ -239,7 +245,7 @@ function MerchStore() {
               <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
                 <span className="text-sm font-medium text-muted-foreground">After Redemption</span>
                 <span className="text-lg font-bold text-[#1d2b24]">
-                  {confirmProduct ? state.points - confirmProduct.pointsCost : state.points} ⭐
+                  {confirmProduct ? state.points - confirmProduct.redeemPoints : state.points} ⭐
                 </span>
               </div>
             </div>
@@ -295,7 +301,7 @@ function MerchStore() {
               <div className="border-t border-border pt-3">
                 <div className="flex justify-between font-semibold text-[#1d2b24]">
                   <span>Total Price</span>
-                  <span>₹{(checkoutProduct?.priceRupees ?? 0) * checkoutQuantity}</span>
+                  <span>₹{(checkoutProduct?.directPrice ?? 0) * checkoutQuantity}</span>
                 </div>
               </div>
 
@@ -343,7 +349,7 @@ function MerchStore() {
                 <h3 className="font-semibold text-[#1d2b24]">{purchaseResult.product.name}</h3>
                 <p className="mt-1 text-xs text-muted-foreground">Purchased • Qty: {purchaseResult.quantity}</p>
                 <p className="mt-2 rounded-full bg-[#fceae2] px-3 py-1 text-center text-xs font-medium text-[#5d3828]">
-                  ₹{purchaseResult.product.priceRupees * purchaseResult.quantity}
+                  ₹{purchaseResult.product.directPrice * purchaseResult.quantity}
                 </p>
               </div>
             )}

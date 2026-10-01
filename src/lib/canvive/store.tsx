@@ -306,21 +306,21 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
   const redeemMerch = useCallback((product: MerchProduct) => {
     let created: Redemption | null = null;
     setState((s) => {
-      if (s.points < product.pointsCost) return s;
+      if (s.points < product.redeemPoints) return s;
       created = {
         id: uid(),
         rewardId: `merch-${product.id}`,
         name: product.name,
         code: `MERCH-${Math.floor(10000 + Math.random() * 89999)}`,
-        points: product.pointsCost,
+        points: product.redeemPoints,
         date: iso(new Date()),
       };
       return {
         ...s,
-        points: s.points - product.pointsCost,
+        points: s.points - product.redeemPoints,
         redemptions: [created, ...s.redemptions],
         activity: [
-          { id: uid(), label: `Redeemed ${product.name}`, points: -product.pointsCost, date: iso(new Date()) },
+          { id: uid(), label: `Redeemed ${product.name}`, points: -product.redeemPoints, date: iso(new Date()) },
           ...s.activity,
         ].slice(0, 12),
       };

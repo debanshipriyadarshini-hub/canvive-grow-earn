@@ -47,24 +47,24 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
-          <Link to="/dashboard" aria-label="CanVive home">
+          <Link to="/dashboard" aria-label="CanVive home" className="shrink-0">
             <Logo />
           </Link>
-          <nav className="ml-4 hidden flex-1 items-center gap-1 lg:flex" aria-label="Main">
+          <nav className="ml-3 hidden flex-1 items-center gap-1 lg:flex" aria-label="Main">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground data-[status=active]:bg-secondary data-[status=active]:text-foreground"
+                className="rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3">
-            <div className="hidden items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground sm:flex">
+            <div className="hidden items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 text-sm font-semibold text-amber-900 sm:flex">
               <span aria-hidden>⭐</span>
               <span>{state.points} pts</span>
             </div>
@@ -99,7 +99,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-secondary data-[status=active]:bg-secondary data-[status=active]:text-foreground"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
                   >
                     <item.icon className="h-4 w-4" aria-hidden />
                     {item.label}
@@ -108,7 +108,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               ))}
               <li>
                 <button
-                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-secondary"
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-emerald-50"
                   onClick={() => {
                     logout();
                     navigate({ to: "/" });
