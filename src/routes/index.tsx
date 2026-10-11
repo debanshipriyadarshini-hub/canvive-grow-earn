@@ -125,19 +125,23 @@ function Landing() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="card-soft bg-sage-soft p-6">
             <p className="text-sm text-muted-foreground">Community cans</p>
-            <p className="font-display text-2xl">{COMMUNITY_STATS.cans.toLocaleString()}</p>
+            <p className="font-display text-2xl">{COMMUNITY_STATS.cans.toLocaleString("en-IN")}</p>
           </div>
           <div className="card-soft bg-coral-soft p-6">
             <p className="text-sm text-muted-foreground">Participants</p>
-            <p className="font-display text-2xl">{COMMUNITY_STATS.users.toLocaleString()}</p>
+            <p className="font-display text-2xl">{COMMUNITY_STATS.users.toLocaleString("en-IN")}</p>
           </div>
           <div className="card-soft bg-water p-6">
             <p className="text-sm text-muted-foreground">Points earned</p>
-            <p className="font-display text-2xl">{COMMUNITY_STATS.points.toLocaleString()}</p>
+            <p className="font-display text-2xl">
+              {COMMUNITY_STATS.points.toLocaleString("en-IN")}
+            </p>
           </div>
           <div className="card-soft bg-beige p-6">
             <p className="text-sm text-muted-foreground">Virtual plants grown</p>
-            <p className="font-display text-2xl">{COMMUNITY_STATS.plants.toLocaleString()}</p>
+            <p className="font-display text-2xl">
+              {COMMUNITY_STATS.plants.toLocaleString("en-IN")}
+            </p>
           </div>
         </div>
       </section>

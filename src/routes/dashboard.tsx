@@ -158,16 +158,19 @@ function Dashboard() {
           <h3 className="mt-6 text-base">Community Impact</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li className="flex justify-between">
-              <span>Cans collected</span> <span>{COMMUNITY_STATS.cans.toLocaleString()}</span>
+              <span>Cans collected</span>
+              <span>{COMMUNITY_STATS.cans.toLocaleString("en-IN")}</span>
             </li>
             <li className="flex justify-between">
-              <span>Participants</span> <span>{COMMUNITY_STATS.users.toLocaleString()}</span>
+              <span>Participants</span> <span>{COMMUNITY_STATS.users.toLocaleString("en-IN")}</span>
             </li>
             <li className="flex justify-between">
-              <span>Points earned</span> <span>{COMMUNITY_STATS.points.toLocaleString()}</span>
+              <span>Points earned</span>
+              <span>{COMMUNITY_STATS.points.toLocaleString("en-IN")}</span>
             </li>
             <li className="flex justify-between">
-              <span>Virtual plants grown</span> <span>{COMMUNITY_STATS.plants.toLocaleString()}</span>
+              <span>Virtual plants grown</span>
+              <span>{COMMUNITY_STATS.plants.toLocaleString("en-IN")}</span>
             </li>
           </ul>
           <p className="mt-4 text-xs text-muted-foreground">Community figures are prototype/demo statistics.</p>

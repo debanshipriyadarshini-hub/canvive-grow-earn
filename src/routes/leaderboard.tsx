@@ -88,7 +88,9 @@ function LeaderboardPage() {
             <div key={g.name} className="card-soft p-6">
               <div className="flex items-center justify-between">
                 <p className="font-medium">{g.name}</p>
-                <p className="text-sm text-muted-foreground">{g.cans.toLocaleString()} cans</p>
+                <p className="text-sm text-muted-foreground">
+                  {g.cans.toLocaleString("en-IN")} cans
+                </p>
               </div>
               <div className="mt-3">
                 <Meter value={g.cans} max={maxGroup} tone={tab === "Class" ? "sage" : "coral"} />
