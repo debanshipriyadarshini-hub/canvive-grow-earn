@@ -63,7 +63,7 @@ function LoginPage() {
                 required
               />
             </div>
-            <Button type="submit" variant="accent" className="w-full" size="lg">
+            <Button type="submit" className="w-full" size="lg">
               Login
             </Button>
             <Button type="button" variant="outline" className="w-full" size="lg" onClick={() => submit(true)}>

@@ -56,12 +56,53 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --shadow-soft: 0 1px 2px rgba(55, 65, 81, 0.04), 0 12px 32px -18px rgba(55, 65, 81, 0.28);
-  --shadow-lift: 0 2px 6px rgba(55, 65, 81, 0.05), 0 24px 48px -24px rgba(55, 65, 81, 0.32);
+  --shadow-soft: 0 2px 6px rgba(86, 42, 58, 0.08), 0 16px 34px -20px rgba(86, 42, 58, 0.28);
+  --shadow-lift: 0 4px 10px rgba(86, 42, 58, 0.1), 0 26px 50px -24px rgba(86, 42, 58, 0.34);
 }
 
 :root {
   --radius: 1.1rem;
+  --background: #fce4ec;
+  --foreground: #263238;
+  --card: #fff9fb;
+  --card-foreground: #263238;
+  --popover: #fff9fb;
+  --popover-foreground: #263238;
+  --primary: #238636;
+  --primary-foreground: #ffffff;
+  --secondary: #f8bbd0;
+  --secondary-foreground: #263238;
+  --muted: #f9d3df;
+  --muted-foreground: #79515f;
+  --accent: #ff6b6b;
+  --accent-foreground: #263238;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --border: #edb4c6;
+  --input: #fff9fb;
+  --ring: #238636;
+
+  --sage: #52c41a;
+  --sage-soft: #e3f4df;
+  --coral: #ff6b6b;
+  --coral-soft: #ffe1e5;
+  --cream: #fff9fb;
+  --beige: #f8bbd0;
+  --water: #64b5f6;
+  --sun: #ffd166;
+  --blossom: #b39ddb;
+
+  --sidebar: #fff9fb;
+  --sidebar-foreground: #263238;
+  --sidebar-primary: #238636;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f8bbd0;
+  --sidebar-accent-foreground: #263238;
+  --sidebar-border: #edb4c6;
+  --sidebar-ring: #238636;
+}
+
+.garden-shell {
   --background: oklch(0.984 0.011 87);
   --foreground: oklch(0.266 0.02 250);
   --card: oklch(1 0 0);
@@ -81,7 +122,6 @@
   --border: oklch(0.921 0.013 90);
   --input: oklch(0.95 0.013 90);
   --ring: oklch(0.66 0.13 150);
-
   --sage: oklch(78.34% 0.127 147.64);
   --sage-soft: oklch(0.954 0.024 148);
   --coral: oklch(77.5% 0.099 24.2);
@@ -91,7 +131,6 @@
   --water: oklch(90.8% 0.057 204.1);
   --sun: oklch(92.1% 0.101 93);
   --blossom: oklch(88% 0.075 15);
-
   --sidebar: oklch(0.99 0.004 88);
   --sidebar-foreground: oklch(0.266 0.02 250);
   --sidebar-primary: oklch(0.687 0.13 150);
@@ -100,6 +139,8 @@
   --sidebar-accent-foreground: oklch(0.32 0.03 150);
   --sidebar-border: oklch(0.921 0.013 90);
   --sidebar-ring: oklch(0.66 0.13 150);
+  --shadow-soft: 0 1px 2px rgba(55, 65, 81, 0.04), 0 12px 32px -18px rgba(55, 65, 81, 0.28);
+  --shadow-lift: 0 2px 6px rgba(55, 65, 81, 0.05), 0 24px 48px -24px rgba(55, 65, 81, 0.32);
 }
 
 @layer base {
@@ -112,7 +153,7 @@
   }
 
   body {
-    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 180px), var(--color-background);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 180px), var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-size: 15px;
@@ -137,9 +178,36 @@
 
 @utility card-soft {
   background-color: var(--card);
-  border: 1px solid rgba(16, 24, 40, 0.05);
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, transparent);
   border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.garden-shell .card-soft {
+  border: 1px solid rgba(16, 24, 40, 0.05);
   box-shadow: 0 10px 26px -22px rgba(15, 28, 31, 0.22);
+}
+
+.garden-shell .bg-primary {
+  background-color: #059669;
+}
+
+.garden-shell .bg-primary:hover {
+  background-color: #047857;
+}
+
+.garden-shell .bg-coral {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
+.garden-shell .bg-coral:hover {
+  background-color: #ea580c;
+}
+
+.garden-shell :is(button, a):active {
+  transform: none;
 }
 
 @utility grow-pop {

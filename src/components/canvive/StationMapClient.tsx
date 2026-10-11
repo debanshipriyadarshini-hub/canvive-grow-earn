@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 const COLLEGE_CENTER: [number, number] = [18.4861, 73.8162];
 
 const statusStyles = {
-  Available: "bg-sage-soft text-primary-foreground",
+  Available: "bg-sage-soft text-primary",
   Busy: "bg-sun text-foreground",
   Offline: "bg-beige text-muted-foreground",
 } as const;
@@ -148,7 +148,7 @@ export function StationMapClient({ stations, search, onSearchChange, focusStatio
                     {station.mapStatus}
                   </span>
                   <a
-                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary-foreground underline-offset-4 hover:underline"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary underline-offset-4 hover:underline"
                     href={`https://www.google.com/maps/dir/?api=1&destination=${station.latitude},${station.longitude}`}
                     target="_blank"
                     rel="noreferrer"

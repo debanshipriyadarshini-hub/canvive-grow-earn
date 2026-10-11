@@ -124,7 +124,6 @@ function Stations() {
             </div>
           </dl>
           <Button
-            variant="accent"
             disabled={station?.status !== "Active"}
             onClick={() => {
               if (station?.status === "Active") recycleCan(station.name);

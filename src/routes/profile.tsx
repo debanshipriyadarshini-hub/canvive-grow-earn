@@ -96,7 +96,7 @@ function Profile() {
                 />
               </div>
               <div className="flex gap-2 sm:col-span-2">
-                <Button type="submit" variant="accent">
+                <Button type="submit">
                   Save changes
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setEdit(false)}>

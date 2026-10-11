@@ -5,14 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium cursor-pointer transition-all duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700",
-        accent: "bg-orange-500 text-white shadow-sm hover:bg-orange-600",
+        default: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+        accent: "bg-coral text-foreground shadow-sm hover:bg-coral/90",
         destructive: "bg-red-500 text-white shadow-sm hover:bg-red-600",
-        outline: "border border-border bg-white text-foreground shadow-sm hover:bg-secondary",
+        outline: "border border-border bg-card text-foreground shadow-sm hover:bg-secondary",
         secondary: "bg-secondary text-secondary-foreground hover:bg-emerald-50",
         ghost: "hover:bg-secondary hover:text-foreground",
         link: "text-foreground underline-offset-4 hover:underline",

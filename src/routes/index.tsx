@@ -55,7 +55,7 @@ function Landing() {
 
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-sage-soft px-4 py-1.5 text-sm font-medium text-primary-foreground">
+          <span className="inline-flex items-center gap-2 rounded-full bg-sage-soft px-4 py-1.5 text-sm font-medium text-primary">
             Recycle. Earn. Grow.
           </span>
           <h1 className="mt-6 text-4xl leading-[1.05] sm:text-6xl">Every Can. A New Possibility.</h1>
@@ -63,7 +63,7 @@ function Landing() {
             Turn everyday recycling into points, rewards and a growing digital garden.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" variant="accent">
+            <Button asChild size="lg">
               <Link to="/login">
                 Start Recycling <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
@@ -152,7 +152,7 @@ function Landing() {
           <p className="mx-auto mt-3 max-w-md text-muted-foreground">
             Join a campus community that makes recycling simple, social and rewarding.
           </p>
-          <Button asChild size="lg" variant="accent" className="mt-8">
+          <Button asChild size="lg" className="mt-8">
             <Link to="/signup">Join CanVive</Link>
           </Button>
         </div>

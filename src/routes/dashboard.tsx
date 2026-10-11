@@ -43,7 +43,6 @@ function Dashboard() {
         <div className="flex flex-wrap items-center gap-3">
           <span className="rounded-full bg-sage-soft px-4 py-2 text-sm font-medium">Level: {level}</span>
           <Button
-            variant="accent"
             size="lg"
             onClick={() => {
               recycleCan();

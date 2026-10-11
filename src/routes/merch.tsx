@@ -83,9 +83,9 @@ function MerchStore() {
 
   return (
     <>
-      <section className="mb-10 rounded-[32px] border border-emerald-200/80 bg-gradient-to-r from-[#f5efe4] via-[#f4f8ef] to-[#f9d9a9]/30 px-6 py-8 shadow-[0_20px_60px_rgba(27,54,42,0.08)] sm:px-10 sm:py-12">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-700/80">CANVIVE UPCYCLED COLLECTION</p>
-        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-[#1d2b24] sm:text-5xl">Every can gets a second life.</h1>
+      <section className="mb-10 rounded-[32px] border border-border bg-gradient-to-r from-secondary via-card to-sun/40 px-6 py-8 shadow-soft sm:px-10 sm:py-12">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">CANVIVE UPCYCLED COLLECTION</p>
+        <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Every can gets a second life.</h1>
         <p className="mt-3 max-w-2xl text-base text-foreground/75 sm:text-lg">
           Made from collected cans. Designed for a second life.
         </p>
@@ -98,7 +98,7 @@ function MerchStore() {
         />
         <div className="rounded-full bg-sage-soft px-6 py-3 text-sm font-medium shadow-sm">
           <div className="text-xs text-muted-foreground">YOUR POINTS</div>
-          <div className="text-2xl font-bold text-[#1d2b24]">{state.points} ⭐</div>
+          <div className="text-2xl font-bold text-primary">{state.points} ⭐</div>
         </div>
       </div>
 
@@ -124,9 +124,9 @@ function MerchStore() {
           return (
             <article
               key={product.id}
-              className="group flex flex-col overflow-hidden rounded-[28px] border border-[#dfead6] bg-[#fffdfa] shadow-[0_18px_42px_rgba(28,54,41,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(28,54,41,0.12)]"
+              className="group flex flex-col overflow-hidden rounded-[28px] border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
-              <div className="relative flex h-72 items-center justify-center overflow-hidden bg-gradient-to-br from-[#edf5e8] via-[#faf3e7] to-[#f4ddd0]">
+              <div className="relative flex h-72 items-center justify-center overflow-hidden bg-gradient-to-br from-sage-soft via-cream to-coral-soft">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -136,35 +136,35 @@ function MerchStore() {
 
               <div className="flex flex-1 flex-col p-4 sm:p-5">
                 <div className="mb-3 flex items-center justify-between gap-2">
-                  <span className="rounded-full bg-[#eef6eb] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-800">
+                  <span className="rounded-full bg-sage-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary">
                     {CATEGORY_LABELS[product.category]}
                   </span>
                   <span className="text-[10px] font-medium text-muted-foreground">CanVive Studio</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-[#1d2b24]">{product.name}</h3>
+                <h3 className="text-xl font-bold text-foreground">{product.name}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   {product.labels.map((label) => (
                     <span
                       key={label}
-                      className="rounded-full border border-[#dfe6d5] bg-[#f7f9f4] px-2.5 py-1 text-[10px] font-medium text-[#2c3d32]"
+                      className="rounded-full border border-border bg-secondary/40 px-2.5 py-1 text-[10px] font-medium text-secondary-foreground"
                     >
                       {label}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-5 space-y-3 border-t border-[#e8ebe1] pt-4">
+                <div className="mt-5 space-y-3 border-t border-border pt-4">
                   <div className="flex items-end justify-between">
                     <div>
                       <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Direct Price</div>
-                      <div className="mt-1 font-display text-3xl font-bold text-[#1d2b24]">₹{product.directPrice}</div>
+                      <div className="mt-1 font-display text-3xl font-bold text-foreground">₹{product.directPrice}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Redeem</div>
-                      <div className="mt-1 font-display text-2xl font-bold text-[#e46a3e]">{product.redeemPoints} ⭐</div>
+                      <div className="mt-1 font-display text-2xl font-bold text-primary">{product.redeemPoints} ⭐</div>
                     </div>
                   </div>
                 </div>
@@ -192,11 +192,11 @@ function MerchStore() {
                 </div>
 
                 {!affordable && (
-                  <div className="mt-3 rounded-xl bg-[#fff5ee] px-3 py-2">
+                  <div className="mt-3 rounded-xl bg-coral-soft px-3 py-2">
                     <Meter value={state.points} max={product.redeemPoints} tone="coral" />
                     <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
                       <span>{state.points} / {product.redeemPoints} points</span>
-                      <span className="font-medium text-[#d76b49]">More points needed</span>
+                      <span className="font-medium text-foreground">More points needed</span>
                     </div>
                   </div>
                 )}
@@ -206,18 +206,18 @@ function MerchStore() {
         })}
       </div>
 
-      <section className="mt-16 rounded-[30px] border border-[#e2e8d5] bg-gradient-to-r from-[#f4f5ed] via-[#f7f0e4] to-[#f7ddd0] px-6 py-8 sm:px-10 sm:py-12">
-        <h2 className="text-center font-display text-3xl font-bold text-[#1d2b24] sm:text-4xl">From Can to Creation</h2>
+      <section className="mt-16 rounded-[30px] border border-border bg-gradient-to-r from-sage-soft via-card to-blossom/30 px-6 py-8 sm:px-10 sm:py-12">
+        <h2 className="text-center font-display text-3xl font-bold text-foreground sm:text-4xl">From Can to Creation</h2>
         <p className="mx-auto mt-4 max-w-3xl text-center text-base text-muted-foreground">
           The cans collected through CanVive don't always end their journey at recycling. Selected materials can be transformed into handcrafted products, giving everyday waste a meaningful second life.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {MERCH_IMPACT_STEPS.map((step, idx) => (
-            <div key={step.step} className="rounded-2xl bg-white/70 p-4 text-center shadow-sm">
+            <div key={step.step} className="rounded-2xl bg-card/80 p-4 text-center shadow-sm">
               <div className="mb-3 text-4xl">{step.emoji}</div>
-              <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5d7a67]">Step {idx + 1}</div>
-              <h3 className="mt-2 font-semibold text-[#1d2b24]">{step.title}</h3>
+              <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">Step {idx + 1}</div>
+              <h3 className="mt-2 font-semibold text-foreground">{step.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{step.description}</p>
             </div>
           ))}
@@ -233,18 +233,18 @@ function MerchStore() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
-            <div className="rounded-xl bg-[#f8f8f5] p-4">
+            <div className="rounded-xl bg-muted p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Required Points</span>
-                <span className="font-display text-2xl font-bold text-[#e46a3e]">{confirmProduct?.redeemPoints} ⭐</span>
+                <span className="font-display text-2xl font-bold text-primary">{confirmProduct?.redeemPoints} ⭐</span>
               </div>
               <div className="mt-3 flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Your Points</span>
-                <span className="text-lg font-bold text-[#1d2b24]">{state.points} ⭐</span>
+                <span className="text-lg font-bold text-primary">{state.points} ⭐</span>
               </div>
               <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
                 <span className="text-sm font-medium text-muted-foreground">After Redemption</span>
-                <span className="text-lg font-bold text-[#1d2b24]">
+                <span className="text-lg font-bold text-primary">
                   {confirmProduct ? state.points - confirmProduct.redeemPoints : state.points} ⭐
                 </span>
               </div>
@@ -270,10 +270,10 @@ function MerchStore() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
-            <div className="flex gap-4 rounded-xl bg-[#f8f8f5] p-4">
+            <div className="flex gap-4 rounded-xl bg-muted p-4">
               <img src={checkoutProduct?.image} alt={checkoutProduct?.name} className="h-20 w-20 rounded-lg object-cover" />
               <div>
-                <h4 className="font-semibold text-[#1d2b24]">{checkoutProduct?.name}</h4>
+                <h4 className="font-semibold text-foreground">{checkoutProduct?.name}</h4>
                 <p className="mt-1 text-sm text-muted-foreground">{checkoutProduct?.description}</p>
               </div>
             </div>
@@ -299,13 +299,13 @@ function MerchStore() {
               </div>
 
               <div className="border-t border-border pt-3">
-                <div className="flex justify-between font-semibold text-[#1d2b24]">
+                <div className="flex justify-between font-semibold text-foreground">
                   <span>Total Price</span>
                   <span>₹{(checkoutProduct?.directPrice ?? 0) * checkoutQuantity}</span>
                 </div>
               </div>
 
-              <div className="rounded-xl bg-[#edf6ef] p-4 text-sm text-[#173327]">
+              <div className="rounded-xl bg-sage-soft p-4 text-sm text-foreground">
                 <strong>Delivery Information:</strong> Please provide your delivery details during final checkout.
               </div>
             </div>
@@ -323,32 +323,32 @@ function MerchStore() {
 
       {(redemptionResult || purchaseResult) && (
         <section className="mt-12">
-          <h2 className="text-2xl font-semibold text-[#1d2b24]">My Collection</h2>
+          <h2 className="text-2xl font-semibold text-foreground">My Collection</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {redemptionResult && (
-              <div className="rounded-[24px] border border-[#e5eadb] bg-[#fffdfa] p-4 shadow-sm">
-                <div className="mb-3 overflow-hidden rounded-xl bg-[#edf5e8]">
+              <div className="rounded-[24px] border border-border bg-card p-4 shadow-sm">
+                <div className="mb-3 overflow-hidden rounded-xl bg-sage-soft">
                   <img
                     src={MERCH_PRODUCTS.find((p) => p.id === redemptionResult.rewardId.replace("merch-", ""))?.image}
                     alt={redemptionResult.name}
                     className="h-20 w-full object-cover"
                   />
                 </div>
-                <h3 className="font-semibold text-[#1d2b24]">{redemptionResult.name}</h3>
+                <h3 className="font-semibold text-foreground">{redemptionResult.name}</h3>
                 <p className="mt-1 text-xs text-muted-foreground">Redeemed • {formatDate(redemptionResult.date)}</p>
-                <p className="mt-2 rounded-full bg-[#edf5e8] px-3 py-1 text-center text-xs font-medium text-[#173327]">
+                <p className="mt-2 rounded-full bg-sage-soft px-3 py-1 text-center text-xs font-medium text-primary">
                   Code: {redemptionResult.code}
                 </p>
               </div>
             )}
             {purchaseResult && (
-              <div className="rounded-[24px] border border-[#ebe1d7] bg-[#fffdfa] p-4 shadow-sm">
-                <div className="mb-3 overflow-hidden rounded-xl bg-[#f7efe6]">
+              <div className="rounded-[24px] border border-border bg-card p-4 shadow-sm">
+                <div className="mb-3 overflow-hidden rounded-xl bg-coral-soft">
                   <img src={purchaseResult.product.image} alt={purchaseResult.product.name} className="h-20 w-full object-cover" />
                 </div>
-                <h3 className="font-semibold text-[#1d2b24]">{purchaseResult.product.name}</h3>
+                <h3 className="font-semibold text-foreground">{purchaseResult.product.name}</h3>
                 <p className="mt-1 text-xs text-muted-foreground">Purchased • Qty: {purchaseResult.quantity}</p>
-                <p className="mt-2 rounded-full bg-[#fceae2] px-3 py-1 text-center text-xs font-medium text-[#5d3828]">
+                <p className="mt-2 rounded-full bg-coral-soft px-3 py-1 text-center text-xs font-medium text-foreground">
                   ₹{purchaseResult.product.directPrice * purchaseResult.quantity}
                 </p>
               </div>

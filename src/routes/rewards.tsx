@@ -61,7 +61,7 @@ function Rewards() {
               )}
               <Button
                 className="mt-auto w-full"
-                variant={affordable ? "accent" : "outline"}
+                variant={affordable ? "default" : "outline"}
                 disabled={!affordable}
                 onClick={() => setConfirmId(r.id)}
               >

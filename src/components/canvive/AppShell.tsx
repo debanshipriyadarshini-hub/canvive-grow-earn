@@ -43,10 +43,14 @@ export function AppShell({ children }: { children: ReactNode }) {
     if (ready && !state.authed) navigate({ to: "/login" });
   }, [ready, state.authed, navigate]);
 
-  if (!ready) return <div className="min-h-screen bg-background" />;
+  const isGardenPage = pathname === "/garden";
+
+  if (!ready) {
+    return <div className={cn("min-h-screen bg-background", isGardenPage && "garden-shell")} />;
+  }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className={cn("min-h-screen bg-background", isGardenPage && "garden-shell")}>
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
           <Link to="/dashboard" aria-label="CanVive home" className="shrink-0">
@@ -57,14 +61,26 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Link
                 key={item.to}
                 to={item.to}
-                className="rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
+                className={cn(
+                  "rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-colors",
+                  isGardenPage
+                    ? "hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
+                    : "hover:bg-sage-soft hover:text-primary data-[status=active]:bg-sage-soft data-[status=active]:text-primary",
+                )}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3">
-            <div className="hidden items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 text-sm font-semibold text-amber-900 sm:flex">
+            <div
+              className={cn(
+                "hidden items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-semibold sm:flex",
+                isGardenPage
+                  ? "border border-amber-200 bg-amber-50 text-amber-900"
+                  : "border border-sun/70 bg-sun text-foreground",
+              )}
+            >
               <span aria-hidden>⭐</span>
               <span>{state.points} pts</span>
             </div>
@@ -99,7 +115,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
+                    className={cn(
+                      "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground",
+                      isGardenPage
+                        ? "hover:bg-emerald-50 hover:text-emerald-900 data-[status=active]:bg-emerald-100 data-[status=active]:text-emerald-900"
+                        : "hover:bg-sage-soft hover:text-primary data-[status=active]:bg-sage-soft data-[status=active]:text-primary",
+                    )}
                   >
                     <item.icon className="h-4 w-4" aria-hidden />
                     {item.label}
@@ -108,7 +129,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               ))}
               <li>
                 <button
-                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-emerald-50"
+                  className={cn(
+                    "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground",
+                    isGardenPage ? "hover:bg-emerald-50" : "hover:bg-sage-soft hover:text-primary",
+                  )}
                   onClick={() => {
                     logout();
                     navigate({ to: "/" });

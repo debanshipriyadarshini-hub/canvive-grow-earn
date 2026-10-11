@@ -78,7 +78,7 @@ function SignupPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" value={form.password} onChange={set("password")} required />
             </div>
-            <Button type="submit" variant="accent" size="lg" className="w-full">
+            <Button type="submit" size="lg" className="w-full">
               Create Account
             </Button>
           </form>
