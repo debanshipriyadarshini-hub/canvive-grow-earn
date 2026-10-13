@@ -43,6 +43,27 @@ export type User = {
   email: string;
   mobile: string;
   college: string;
+  qrId: string;
+};
+
+export type RecyclingStatus =
+  | "ready"
+  | "connecting"
+  | "connected"
+  | "ready_to_recycle"
+  | "can_recorded"
+  | "session_complete"
+  | "qr_expired"
+  | "connection_error";
+
+export type RecyclingSession = {
+  id: string;
+  token: string;
+  status: RecyclingStatus;
+  createdAt: string;
+  expiresAt: string;
+  userName: string;
+  machineName: string;
 };
 
 export type State = {
@@ -59,19 +80,35 @@ export type State = {
   redemptions: Redemption[];
   claimedChallenges: string[];
   activity: Activity[];
+  recyclingSession: RecyclingSession | null;
 };
 
 const iso = (d: Date) => d.toISOString();
 const daysAgo = (n: number) => iso(new Date(Date.now() - n * 86400000));
 
+const generateQrId = () => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `cv-${Math.random().toString(36).slice(2, 10)}-${Date.now().toString(36)}`;
+};
+
+const withQrId = (user: Partial<User> = {}): User => ({
+  name: user.name ?? "Aanya Sharma",
+  email: user.email ?? "demo@canvive.com",
+  mobile: user.mobile ?? "+91 98765 43210",
+  college: user.college ?? "Cummins College of Engineering",
+  qrId: typeof user.qrId === "string" && user.qrId.trim() ? user.qrId : generateQrId(),
+});
+
 const initialState: State = {
   authed: false,
-  user: {
+  user: withQrId({
     name: "Aanya Sharma",
     email: "demo@canvive.com",
     mobile: "+91 98765 43210",
     college: "Cummins College of Engineering",
-  },
+  }),
   cans: 42,
   points: 420,
   cansThisWeek: 12,
@@ -96,6 +133,7 @@ const initialState: State = {
     { id: "a3", label: "Can recycled", points: 10, date: daysAgo(3) },
     { id: "a4", label: "Reward milestone reached", points: 50, date: daysAgo(5) },
   ],
+  recyclingSession: null,
 };
 
 const KEY = "canvive-state-v1";
@@ -108,6 +146,11 @@ type Ctx = {
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
   recycleCan: (location?: string) => void;
+  startRecyclingSession: () => void;
+  connectRecyclingMachine: () => void;
+  recordRecyclingCan: (location?: string) => void;
+  expireRecyclingSession: () => void;
+  clearRecyclingSession: () => void;
   choosePlant: (id: PlantId) => void;
   setActivePlant: (id: PlantId) => void;
   redeem: (rewardId: string) => Redemption | null;
@@ -145,9 +188,16 @@ function normalizeState(saved: Partial<State>): State {
       })
     : initialState.completedPlants;
 
+  const user = withQrId({
+    ...initialState.user,
+    ...saved.user,
+    qrId: typeof saved.user?.qrId === "string" && saved.user.qrId.trim() ? saved.user.qrId : undefined,
+  });
+
   return {
     ...initialState,
     ...saved,
+    user,
     garden,
     activePlant: activePlant && garden.some((plant) => plant.id === activePlant) ? activePlant : garden[0]?.id ?? null,
     completedPlants,
@@ -200,17 +250,86 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
   );
 
   const login = useCallback((user?: Partial<User>) => {
-    setState((s) => ({ ...s, authed: true, user: { ...s.user, ...user } }));
+    setState((s) => {
+      const mergedUser = withQrId({ ...s.user, ...user });
+      return { ...s, authed: true, user: mergedUser };
+    });
   }, []);
 
   const signup = useCallback((user: Partial<User>) => {
-    setState((s) => ({ ...s, authed: true, user: { ...s.user, ...user } }));
+    setState((s) => {
+      const mergedUser = withQrId({ ...s.user, ...user });
+      return { ...s, authed: true, user: mergedUser };
+    });
   }, []);
 
   const logout = useCallback(() => setState((s) => ({ ...s, authed: false })), []);
 
   const updateUser = useCallback((user: Partial<User>) => {
-    setState((s) => ({ ...s, user: { ...s.user, ...user } }));
+    setState((s) => ({ ...s, user: withQrId({ ...s.user, ...user }) }));
+  }, []);
+
+  const startRecyclingSession = useCallback(() => {
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 4 * 60 * 1000);
+
+    setState((s) => ({
+      ...s,
+      recyclingSession: {
+        id: uid(),
+        token: `CV-${Math.random().toString(36).slice(2, 10).toUpperCase()}`,
+        status: "ready",
+        createdAt: iso(now),
+        expiresAt: iso(expiresAt),
+        userName: s.user.name.split(" ")[0],
+        machineName: "Campus Recycling Station 03",
+      },
+    }));
+  }, []);
+
+  const connectRecyclingMachine = useCallback(() => {
+    setState((s) => {
+      if (!s.recyclingSession || s.recyclingSession.status === "qr_expired") return s;
+      const nextStatus = s.recyclingSession.status === "ready" ? "connecting" : s.recyclingSession.status;
+
+      setTimeout(() => {
+        setState((current) => {
+          if (!current.recyclingSession) return current;
+          return {
+            ...current,
+            recyclingSession: {
+              ...current.recyclingSession,
+              status: "connected",
+            },
+          };
+        });
+
+        setTimeout(() => {
+          setState((current) => {
+            if (!current.recyclingSession) return current;
+            return {
+              ...current,
+              recyclingSession: {
+                ...current.recyclingSession,
+                status: "ready_to_recycle",
+              },
+            };
+          });
+        }, 1400);
+      }, 1200);
+
+      return {
+        ...s,
+        recyclingSession: {
+          ...s.recyclingSession,
+          status: nextStatus,
+          createdAt: s.recyclingSession.createdAt,
+          expiresAt: s.recyclingSession.expiresAt,
+          userName: s.recyclingSession.userName,
+          machineName: s.recyclingSession.machineName,
+        },
+      };
+    });
   }, []);
 
   const recycleCan = useCallback(
@@ -262,6 +381,54 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
     },
     [state],
   );
+
+  const recordRecyclingCan = useCallback(
+    (location = "CanVive Station") => {
+      setState((s) => {
+        if (!s.recyclingSession) return s;
+        return {
+          ...s,
+          recyclingSession: {
+            ...s.recyclingSession,
+            status: "can_recorded",
+          },
+        };
+      });
+
+      recycleCan(location);
+
+      setTimeout(() => {
+        setState((s) => {
+          if (!s.recyclingSession) return s;
+          return {
+            ...s,
+            recyclingSession: {
+              ...s.recyclingSession,
+              status: "session_complete",
+            },
+          };
+        });
+      }, 1200);
+    },
+    [recycleCan],
+  );
+
+  const expireRecyclingSession = useCallback(() => {
+    setState((s) => {
+      if (!s.recyclingSession || s.recyclingSession.status === "session_complete") return s;
+      return {
+        ...s,
+        recyclingSession: {
+          ...s.recyclingSession,
+          status: "qr_expired",
+        },
+      };
+    });
+  }, []);
+
+  const clearRecyclingSession = useCallback(() => {
+    setState((s) => ({ ...s, recyclingSession: null }));
+  }, []);
 
   const choosePlant = useCallback((id: PlantId) => {
     setState((s) => {
@@ -356,6 +523,11 @@ export function CanViveProvider({ children }: { children: ReactNode }) {
     logout,
     updateUser,
     recycleCan,
+    startRecyclingSession,
+    connectRecyclingMachine,
+    recordRecyclingCan,
+    expireRecyclingSession,
+    clearRecyclingSession,
     choosePlant,
     setActivePlant,
     redeem,

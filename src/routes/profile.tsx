@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { QrCode } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, PageHeader } from "@/components/canvive/AppShell";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ACHIEVEMENTS, LEVELS } from "@/lib/canvive/data";
@@ -28,7 +30,10 @@ export const Route = createFileRoute("/profile")({
 function Profile() {
   const { state, updateUser, level, reset } = useCanVive();
   const [edit, setEdit] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
   const [form, setForm] = useState(state.user);
+  const qrPayload = `canvive-account:${state.user.qrId}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=520x520&data=${encodeURIComponent(qrPayload)}`;
 
   const unlocked = (id: string) => {
     const cans = state.cans;
@@ -127,6 +132,60 @@ function Profile() {
             </>
           )}
         </section>
+
+        <section className="card-soft p-6">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">MY CANVIVE QR</p>
+              <h2 className="mt-2 text-2xl">Your personal recycling ID</h2>
+            </div>
+            <div className="rounded-full bg-sage-soft p-2 text-sage-foreground">
+              <QrCode className="h-5 w-5" />
+            </div>
+          </div>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Your personal recycling ID. Scan at any CanVive station to connect your account and earn points.
+          </p>
+
+          <div className="mt-6 flex flex-col items-center rounded-[28px] bg-white p-4 shadow-inner ring-1 ring-border">
+            <img
+              src={qrUrl}
+              alt="Your permanent CanVive personal QR code"
+              className="h-[170px] w-[170px] rounded-2xl bg-white object-cover"
+            />
+            <div className="mt-4 w-full text-center">
+              <p className="text-lg font-medium">{state.user.name}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">Your Personal Recycling QR</p>
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm text-muted-foreground">Show this QR to the scanner at a CanVive recycling station.</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <Field label="CanVive Points" value={`${state.points} ⭐`} />
+            <Field label="Cans Recycled" value={String(state.cans)} />
+          </div>
+          <Button className="mt-5 w-full" onClick={() => setQrOpen(true)}>
+            View My QR
+          </Button>
+        </section>
+
+        <Dialog open={qrOpen} onOpenChange={setQrOpen}>
+          <DialogContent className="max-w-md rounded-3xl">
+            <DialogHeader>
+              <DialogTitle>My CanVive QR</DialogTitle>
+            </DialogHeader>
+            <div className="flex justify-center">
+              <div className="rounded-[28px] bg-white p-5 shadow-inner ring-1 ring-border">
+                <img src={qrUrl} alt="Large CanVive QR code" className="h-[260px] w-[260px] rounded-2xl bg-white object-cover" />
+              </div>
+            </div>
+            <p className="text-center text-xl font-semibold">{state.user.name}</p>
+            <p className="text-center text-xs uppercase tracking-[0.2em] text-muted-foreground">Your Personal Recycling QR</p>
+            <p className="text-center text-sm text-muted-foreground">
+              Show this QR to the scanner at a CanVive recycling station.
+            </p>
+          </DialogContent>
+        </Dialog>
 
         <section className="card-soft p-6">
           <h2 className="text-xl">Levels</h2>
